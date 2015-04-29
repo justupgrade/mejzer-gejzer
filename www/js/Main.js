@@ -5,6 +5,7 @@ function Main() {
     var ctx;
     var buffer;
     var bufferCtx;
+    var movementController = new MovementController();
 
     var self = this;
 
@@ -19,6 +20,7 @@ function Main() {
 
 
     this.Init = function() {
+    	
         factory = new MapFactory();
         map = new Map(factory);
 
@@ -29,6 +31,8 @@ function Main() {
         buffer.width = _canvas.width;
         buffer.height = _canvas.height;
         bufferCtx = buffer.getContext('2d');
+        
+       
 
         return true;
     }
@@ -46,6 +50,7 @@ function Main() {
 
     this.GameReady = function(evt) {
         if(map.loaded) {
+        	movementController.SetMap(map);
             clearInterval(self.InitListener);
             self.Draw();
 
@@ -55,16 +60,14 @@ function Main() {
     }
 
     this.Start = function() {
-        var grid = new Grid(8,14);
-        grid.generateFromMap(map.GetMap());
-
-        var test1 = new Pathfinder();
-        test1.setGrid(grid);
-
-        test1.setStartPoint(12,7);
-        test1.setFinishPoint(12,3);
-
-        alert(test1.findPath());
+        //add listener to the canvas...
+    	console.log('started');
+    	_canvas.addEventListener('click', this.onCanvasClick);
+    }
+    
+    this.onCanvasClick = function(e) { //clientX, offsetX
+    	movementController.clickHandler( {"X":e.clientX, "Y":e.clientY} );
+    	self.Draw();
     }
 
     this.Run = function() {

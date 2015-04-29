@@ -1,5 +1,5 @@
 /**
- * Created by tomasz on 27.04.15.
+f * Created by tomasz on 27.04.15.
  */
 //--------------------- TILE CLASS ----------------------
 function Tile(x,y) {

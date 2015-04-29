@@ -58,22 +58,120 @@ MovementControllerTest.prototype.setUp = function() {
 		                   [2,2,2,2,0,2,2,2,0,2,0,2,0,2],
 		                   [1,0,4,2,0,3,0,0,0,2,0,2,0,2],
 		                   [2,0,2,2,0,2,2,2,2,2,0,2,0,2],
-		                   [2,0,3,0,0,2,5,3,0,0,0,2,0,2],
+		                   [2,0,3,0,0,2,5,3,0,0,0,2,6,2],
 		                   [2,2,2,2,2,2,2,2,2,2,2,2,1,2]
 		               ]
-		           ]
+		           ],
+		     "monsters": [
+		          { "type": "monster", "col":11, "row":3 }
+		      ]
 	};
 	
 	map.ParseMap(rawMapData['levels'][0]);
+	map.ParseMonsters(rawMapData['monsters']);
+	
+	//jstestdriver.console.log('monster (col,row):' + map.GetMonsters()[0].col + "," +map.GetMonsters()[0].row);
 }
 
-//test good action taken :: overall test
-MovementControllerTest.prototype.testActionOnTile = function() {
+/*
+ * click on monster ->
+ * 	first click -> show monster stats
+ *  second click -> find path and start fight
+ */
+MovementControllerTest.prototype.testClickOnMonster = function() {
+	var location = {"COL":11, "ROW":3};
+	var monster = controller.getMonster(location);
+	//jstestdriver.console.log('monster = ' + monster);
+	assertTrue(controller.clickedOnMonster(monster)); //first click
+	var path = controller.clickedOnMonster(monster) //second click
+	jstestdriver.console.log('path: ' + path);
+	for(var idx in path){
+		jstestdriver.console.log("cords:" + path[idx].getCol() + ", " + path[idx].getRow());
+	}
+}
+
+//GRID GENERATION FROM MAP TEST;
+MovementControllerTest.prototype.testGridGeneration = function() {
+	var grid = new Grid(map.GetHeight(), map.GetWidth());
+	grid.generateFromMap(map.GetMap());
+	
+	var tiles = map.GetMap(); //blocks...
+	
+	for(var i=0; i < map.GetHeight(); i++) {
+		for(var j=0; j < map.GetWidth(); j++){
+			//jstestdriver.console.log(tiles[i][j] instanceof Empty);
+		}
+	}
+	
+	for(var i=0; i < map.GetHeight(); i++) {
+		for(var j=0; j < map.GetWidth(); j++){
+			//jstestdriver.console.log(grid.getTile(j,i).isOpen());
+		}
+	}
+	
 	
 }
 
+
+//test good action taken :: test movement
+MovementControllerTest.prototype.testClickedOnSameTile = function() {
+	var start = {"COL":12,"ROW":7};
+	var finish = {"COL": 12, "ROW":3};
+	
+	var tile = controller.getTile(finish);
+	
+	assertTrue(controller.clickedOnFloor(tile));
+	assertNotNull(controller.GetLastSelectedTile());
+	controller.clickedOnFloor(tile);
+	
+	//jstestdriver.console.log('response:' + controller.clickedOnFloor(tile));
+	//player position updated?
+	//expected == finish
+	var actual = controller.GetPlayer().GetCords();
+	
+	assertEquals(finish,actual);
+}
+
+//PATH GENERATIOON TEST!!!
+MovementControllerTest.prototype.testGeneratePath = function() {
+	var start = {"COL":12,"ROW":7};
+	var finish = {"COL": 10, "ROW":3};
+	
+	var path = controller.generatePath(start,finish);
+	
+	for(var idx in path) {
+		//jstestdriver.console.log(path[idx].getCol() + ", " + path[idx].getRow());
+	}
+}
+
+//first click -> show path -> second click -> go
 MovementControllerTest.prototype.testActionFloor = function() {
+	var tile = controller.getTile({"COL":12, "ROW":7}); //player position
+	var expected = null;
 	
+	var actual = controller.clickedOnFloor(tile);
+	assertNull(actual);
+	assertNull(controller.GetLastSelectedTile());
+	//click one tile above player...
+	var tile = controller.getTile({"COL":12, "ROW":6});
+	
+	//expected array
+	var path = controller.clickedOnFloor(tile);
+	assertNotNull(path);
+	
+	for(var idx in path) {
+		//jstestdriver.console.log(path[idx].getCol() + ", " + path[idx].getRow());
+		//full path: start + tiles + finish -> so remember to remove first element
+		//Tiles!!! not points or MapBlocks!
+	}
+	
+	//clicked on floor but monster in a way...
+	//var tile = controller.getTile({"COL":10, "ROW":3});
+	//var path = controller.clickedOnFloor(tile);
+	
+	for(var idx in path) {
+		//jstestdriver.console.log(path[idx].getCol() + ", " + path[idx].getRow());
+	}
 }
 
 //clicked on nothing -> do nothing -> clear all selections
@@ -100,6 +198,15 @@ MovementControllerTest.prototype.testGetTile = function() {
 	
 	assertTrue(expected instanceof Wall);
 	assertFalse(expected instanceof Empty);
+	
+	var cords = {"COL":1, "ROW":2};
+	
+	var expected = new Monster();
+	var actual = controller.getTile(cords);
+	
+	//jstestdriver.console.log(expected instanceof Wall);
+	
+	assertTrue(expected instanceof Monster);
 }
 
 //test1 -> get COL and ROW of clicked tile

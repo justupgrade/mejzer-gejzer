@@ -1,24 +1,38 @@
 function Map(factory) {
     this.map = null;
+    this.player = null;
     this.factory = factory;
     this.loaded = false;
     this.cols = 0;
     this.rows = 0;
     var self = this;
+    var tileSize = 30;
 
 
 
-    this.Load = function(lvl, callback) {
+    this.Load = function(lvl) {
         var formdata = new FormData();
         formdata.append('lvl', 0);
         var xhr = new XMLHttpRequest();
-        xhr.addEventListener('load', this.onMapLoadHandler); //this.onMapLoadHandler
+        xhr.addEventListener('load', this.OnMapLoadHandler); //this.onMapLoadHandler
         xhr.open('POST', './actions/load_level.php');
         xhr.send(formdata);
     }
 
     this.OnMapLoadHandler = function(e){
+    	//console.log('loaoded');
         map = self.ParseMap(JSON.parse(e.target.responseText));
+    }
+    
+    this.ParseMonsters = function(data){
+    	var factory = new MonsterFactory();
+    	
+    	this.monsters = [];
+    	
+    	for(var idx in data){
+    		var descriptor = data[idx];
+    		this.monsters.push(factory.create(descriptor));
+    	}
     }
 
     this.ParseMap = function(data) {
@@ -42,7 +56,13 @@ function Map(factory) {
                     case 3: cell = new Monster(); break;
                     case 4: cell = new Quest(); break;
                     case 5: cell = new Item(); break;
+                    case 6: 
+                    	cell = new Empty();
+                    	this.player = new Player();
+                    	this.player.SetCords( {"COL":col, "ROW":row} );
+                    	break;
                 }
+                cell.SetCords({"COL":col, "ROW":row});
                 array.push(cell);
             }
             this.map.push(array);
@@ -59,16 +79,55 @@ function Map(factory) {
     }
 
     this.Draw = function(ctx) {
-        var tileSize = 30;
+        
         for(var row=0; row < this.rows; row++){
             for(var col=0; col < this.cols; col++){
                 ctx.fillStyle = this.map[row][col].GetFillStyle();
-                ctx.fillRect(30*col,30*row,30,30);
+                ctx.fillRect(tileSize*col,tileSize*row,tileSize,tileSize);
             }
         }
+        
+        //draw player:
+        var pCords = this.player.GetCords();
+        ctx.fillStyle = this.player.GetFillStyle();
+        ctx.fillRect(tileSize*pCords.COL,tileSize*pCords.ROW,tileSize,tileSize);
+      //  ctx.arc(30*pCords.COL+15,30*pCords.ROW+15,15,0,2*Math.PI, false);
+      //  ctx.fill();
     }
 
     this.GetMap = function() {
         return this.map;
+    }
+    
+    this.GetPlayer = function() {
+    	return this.player;
+    }
+    
+    this.GetWidth = function() {
+    	return this.cols;
+    }
+    
+    this.GetHeight = function() {
+    	return this.rows;
+    }
+    
+    this.GetMonster = function(location) {
+    	for(var idx in this.monsters){
+    		var monster = this.monsters[idx];
+    		if(monster.col == location.COL && monster.row == location.ROW){
+    			return monster;
+    		}
+    	}
+    	return null;
+    }
+    
+    this.GetMonsters = function() {
+    	return this.monsters;
+    }
+    
+    this.MovePlayerTo = function(path) {
+    	var finish = path[path.length-1];
+    	
+    	this.player.SetCords({"COL":finish.getCol(), "ROW":finish.getRow()});
     }
 }

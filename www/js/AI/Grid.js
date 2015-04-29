@@ -35,7 +35,7 @@ Grid.prototype.generateFromMap = function(map) {
         rows = [];
         for(var col=0; col < map[0].length; col++) {
             tile = new Tile(col,row);
-            if(map[row][col] === 2) tile.setType(1); //block
+            if(map[row][col] instanceof Empty === false) tile.setType(1); //block
             rows.push(tile);
         }
         this.grid.push(rows);

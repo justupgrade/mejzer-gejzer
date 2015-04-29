@@ -6,12 +6,22 @@ function Pathfinder() {
 
 Pathfinder.prototype.findPath = function() {
     var lastParent = this.start;
+    
+    var max = 100;
+    var count = 0;
 
     while(lastParent !== this.finish) {
         this.addAdjacentTilesToOpenList(lastParent);
         this.moveToClosedList(lastParent);
         this.calculateCost(lastParent);
-        lastParent = this.findTileWithTheLowestCost();
+        
+        try{
+        	lastParent = this.findTileWithTheLowestCost();
+        } catch(err) {
+        	return null;
+        }
+        
+        if(++count > max) break;
     }
 
     return this.finializeSearch(lastParent);

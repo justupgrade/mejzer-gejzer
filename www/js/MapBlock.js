@@ -39,6 +39,18 @@ function MapBlock() {
         //filled rectangle?Main.prototype.load = function()
         return null;
     }
+    
+    this.col = null;
+    this.row = null;
+    
+    this.SetCords = function(cords) {
+    	this.col = cords.COL;
+    	this.row = cords.ROW;
+    }
+    
+    this.GetCords = function() {
+    	return {"COL":this.col, "ROW":this.row};
+    }
 
     this.ImageRepository = null;
 }
