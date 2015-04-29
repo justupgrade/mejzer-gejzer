@@ -122,6 +122,20 @@ function Map(factory) {
     	return null;
     }
     
+    this.RemoveMonster = function(enemy){
+    	for(var idx in this.monsters){
+    		var monster = this.monsters[idx];
+    		if(monster.col == enemy.col && monster.row == enemy.row){
+    			//monster to remove found!
+    			var cell = new Empty();
+    			cell.SetCords({"COL":monster.col, "ROW":monster.row});
+    			this.map[monster.row][monster.col] = cell;
+    			this.monsters.splice(idx,1);
+    			break;
+    		}
+    	}
+    }
+    
     this.GetMonsters = function() {
     	return this.monsters;
     }

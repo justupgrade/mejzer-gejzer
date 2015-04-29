@@ -16,6 +16,7 @@
     <script type="text/javascript" src="./js/AI/Pathfinder.js"></script>
     
     <script type="text/javascript" src="./js/controllers/MovementController.js"></script>
+    <script type="text/javascript" src="./js/controllers/CombatController.js"></script>
     <script type="text/javascript" src="./js/controllers/MonsterFactory.js"></script>
     
     <script type="text/javascript" src="./js/Map.js"></script>

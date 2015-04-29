@@ -6,6 +6,8 @@ function Main() {
     var buffer;
     var bufferCtx;
     var movementController = new MovementController();
+    var combatController = new CombatController();
+    
 
     var self = this;
 
@@ -67,8 +69,17 @@ function Main() {
     
     this.onCanvasClick = function(e) { //clientX, offsetX
     	movementController.clickHandler( {"X":e.clientX, "Y":e.clientY} );
+    	
     	self.Draw();
     }
+    
+    this.OpenCombatWindow = function(player,monster){
+    	combatController.SetMap(map);
+    	combatController.init(player,monster);
+    	combatController.solveCombat();
+    }
+    
+    movementController.SetCombatCallback(this.OpenCombatWindow);
 
     this.Run = function() {
         if(this.Init()) this.Load();

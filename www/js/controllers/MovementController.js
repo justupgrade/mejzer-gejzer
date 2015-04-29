@@ -13,6 +13,10 @@ MovementController = function() {
 	this.lastSelectedItem = null;
 }
 
+MovementController.prototype.SetCombatCallback = function(value) {
+	this.CombatCallback = value;
+}
+
 //------------------- click actions ---------------
 MovementController.prototype.clickHandler = function(location) {
 	var cords = this.calculateCords(location.X, location.Y);
@@ -42,7 +46,7 @@ MovementController.prototype.clickedOnMonster = function(monster) {
 		//move close to monster (if not aleady and open fight menu)
 		if(this.distanceFromPlayer(monster) == 1){
 			//open combat window...
-			return "fight_ready";
+			this.OpenCombatWindow(monster);
 		} else {
 			//get path to target:
 			this.resetSelection();
@@ -60,6 +64,7 @@ MovementController.prototype.clickedOnMonster = function(monster) {
 				//move to target
 				this.map.MovePlayerTo(path);
 				//open combat window
+				this.OpenCombatWindow(monster);
 			}
 			
 			return path;
@@ -74,6 +79,11 @@ MovementController.prototype.clickedOnMonster = function(monster) {
 	}
 	
 	return 'nothing_happend';
+}
+
+MovementController.prototype.OpenCombatWindow = function(monster) {
+	//callback?
+	this.CombatCallback(this.GetPlayer(), monster);
 }
 
 MovementController.prototype.distanceFromPlayer = function(monster) {
