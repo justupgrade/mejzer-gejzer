@@ -41,6 +41,7 @@ MovementController.prototype.clickedOnMonster = function(monster) {
 	if(this.lastSelectedMonster != null && this.lastSelectedMonster == monster){
 		//move close to monster (if not aleady and open fight menu)
 		if(this.distanceFromPlayer(monster) == 1){
+			//open combat window...
 			return "fight_ready";
 		} else {
 			//get path to target:
@@ -49,7 +50,19 @@ MovementController.prototype.clickedOnMonster = function(monster) {
 			var start = this.map.GetPlayer().GetCords();
 			var finish = {"COL":monster.col,"ROW":monster.row};
 			
-			return this.generatePath(start,finish);
+			//monster in the path? -> splice path
+			var path =  this.generatePath(start,finish);
+			path.splice(path.length-1,1);
+			
+			if(this.isMonsterInPath(path)) {
+				return null;
+			} else {
+				//move to target
+				this.map.MovePlayerTo(path);
+				//open combat window
+			}
+			
+			return path;
 		}
 		
 	}
