@@ -14,7 +14,7 @@
         }
 
         public function load() {
-            $this->map = json_decode(file_get_contents("../data/map.json"), true)['levels'];
+            $this->map = json_decode(file_get_contents("../data/map.json"), true);
             //var_dump($this->map);
         }
 
@@ -24,6 +24,10 @@
 
         public function getTile($col,$row){
             return $this->map[$this->lvlIDX][$row][$col];
+        }
+        
+        public function getRoom() {
+        	return $this->map;
         }
 
 

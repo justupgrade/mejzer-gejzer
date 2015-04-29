@@ -21,7 +21,8 @@ function Map(factory) {
 
     this.OnMapLoadHandler = function(e){
     	//console.log('loaoded');
-        map = self.ParseMap(JSON.parse(e.target.responseText));
+        map = self.ParseMap(JSON.parse(e.target.responseText)['room']);
+        self.ParseMonsters(JSON.parse(e.target.responseText)['monsters']);
     }
     
     this.ParseMonsters = function(data){

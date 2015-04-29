@@ -10,6 +10,6 @@
     $lvl = isset($_GET['lvl']) ? $_GET['lvl'] : 0;
     $map = new Map($lvl);
     $map->load();
-    echo json_encode($map->getLevel($lvl));
+    echo json_encode($map->getRoom());
     die();
 ?>

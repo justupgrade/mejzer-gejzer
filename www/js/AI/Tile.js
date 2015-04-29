@@ -11,6 +11,7 @@ function Tile(x,y) {
     this.parentTile = null;
     this.inOpenList = false;
     this.inClosedList = false;
+    this.hasMonster = false;
 }
 
 Tile.prototype.reset = function() {
@@ -20,6 +21,11 @@ Tile.prototype.reset = function() {
     this.parentTile = null;
     this.inOpenList = false;
     this.inClosedList = false;
+    this.hasMonster = false;
+}
+
+Tile.prototype.SetMonster = function(value) {
+	this.hasMonster = value;
 }
 
 Tile.prototype.setClosedList = function(value) {
