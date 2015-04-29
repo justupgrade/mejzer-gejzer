@@ -21,4 +21,5 @@ function MonsterFactory() {
 }
 
 function Enemy() {
+	
 }
