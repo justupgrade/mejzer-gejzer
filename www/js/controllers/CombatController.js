@@ -6,6 +6,11 @@ function CombatController() {
 	this.player = null;
 	this.enemy = null;
 	this.map = null;
+	this.inventoryController = null;
+}
+
+CombatController.prototype.AddInventoryController = function(controller) {
+	this.inventoryController = controller;
 }
 
 CombatController.prototype.SetMap = function(map) {
@@ -50,12 +55,13 @@ CombatController.prototype.solveTurn = function() {
 }
 
 CombatController.prototype.RemoveEnemy = function() {
-	//remove enemy from Map()->monsters 
-	//remove monster tile from Map()->map :: change to Empty
-	//redraw map
-	//alert('enemy died!');
+	//drop something...
+	if(this.enemy.id == 4) {
+		var item = this.inventoryController.GetNewItemById(10);
+		this.inventoryController.addItem(item);
+	}
 	this.player.AddKillToHistory(this.enemy.id);
-	this.map.RemoveMonster(this.enemy);
+	this.map.RemoveMonster(this.enemy); //remove enemy from Map()->monsters 
 	
 }
 

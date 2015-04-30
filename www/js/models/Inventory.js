@@ -36,7 +36,7 @@ Inventory.prototype.GetArmorProtection = function(baseArmor) {
 Inventory.prototype.getById = function(id) {
 	for(var idx in this.inventory){
 		var item = this.inventory[idx];
-		if(item.itemID === id) return item;
+		if(item.itemID == id) return item;
 	}
 	
 	return null;

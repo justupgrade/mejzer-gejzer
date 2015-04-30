@@ -105,6 +105,10 @@ function Player() {
     	return this.killHistory.indexOf(monster_id) == -1 ? false : true;
     }
     
+    this.HasItemInInventory = function(item_id){
+    	return this.inventory.getById(item_id) === null ? false : true;
+    }
+    
     this.Update = function() {
     	//update stats after inventory change...
     	this.weaponBonus = this.inventory.GetWeaponDamage(this.strength);

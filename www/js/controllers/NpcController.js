@@ -40,7 +40,7 @@ NpcController.prototype.AddQuest = function(questIDX) {
 		//do nothing
 	} else if(quest === true) {
 		//quest objective completed!!! reward player
-		this.player.CompleteQuest(quest); 
+		this.player.CompleteQuest(this.player.ActiveQuest); 
 		alert("Quest Completed!!!");
 	} else if(quest === null){
 		//quest active but not completed -> set as ActiveQuest...
@@ -54,9 +54,7 @@ NpcController.prototype.AddQuest = function(questIDX) {
 			alert("Quest Activated! " + quest.GetQuestTitle());
 		}
 	}
-	
-	
-	
+
 	return quest;
 }
 

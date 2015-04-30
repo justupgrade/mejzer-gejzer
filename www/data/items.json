@@ -1,0 +1,15 @@
+{
+	"items":
+	[
+		{ "id": 1, "type": "weapon", "damage": 1 },
+		{ "id": 2, "type": "weapon", "damage": 2 },
+		{ "id": 3, "type": "weapon", "damage": 3 },
+		{ "id": 4, "type": "weapon", "damage": 4 },
+		{ "id": 5, "type": "weapon", "damage": 5 },
+		{ "id": 6, "type": "armor", "protection": 1 },
+		{ "id": 7, "type": "armor", "protection": 2 },
+		{ "id": 8, "type": "armor", "protection": 3 },
+		{ "id": 9, "type": "armor", "protection": 4 },
+		{ "id": 10, "item_name": "stick lvl 2", "type": "quest"}
+	]
+}

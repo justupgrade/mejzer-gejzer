@@ -84,7 +84,7 @@ function FindItemQuest() {
 	
 	this.IsCompleted = function(player) {
 		//has in inventory?
-		return false;
+		return player.HasItemInInventory(this.item_id);
 	}
 }
 

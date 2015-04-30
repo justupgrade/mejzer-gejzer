@@ -8,6 +8,7 @@ function Main() {
     var movementController = new MovementController();
     var combatController = new CombatController();
     var npcController = new NpcController();
+    var inventoryController = new InventoryController();
     
 
     var self = this;
@@ -43,6 +44,7 @@ function Main() {
     this.Load = function() {
         factory.Load();
         map.Load();
+        inventoryController.Load();
 
         //set listener...
         //update
@@ -52,8 +54,10 @@ function Main() {
     }
 
     this.GameReady = function(evt) {
-        if(map.loaded) {
+        if(map.loaded && inventoryController.loaded) {
+        	combatController.AddInventoryController(inventoryController);
         	npcController.load(map.rawQuestData);
+        	inventoryController.SetPlayer(map.GetPlayer());
         	
         	movementController.SetMap(map);
             clearInterval(self.InitListener);

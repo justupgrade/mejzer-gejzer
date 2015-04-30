@@ -21,7 +21,8 @@ QuestController.prototype.addQuest = function(player,npcID,questIDX) {
 	//already has that quest? -> activate only new quests
 	if(player.QuestExists(quest)){
 		if(quest.IsCompleted(player)) {
-			alert('completed');
+			//alert('completed');
+			player.ActiveQuest = quest;
 			return true;
 		}
 		return null; //player.ActiveQuest = quest
