@@ -22,6 +22,10 @@ MovementController.prototype.SetNpcCallback = function(value) {
 	this.NpcCallback = value;
 }
 
+MovementController.prototype.SetItemCallback = function(value){
+	this.ItemCallback = value;
+}
+
 
 //------------------- click actions ---------------
 MovementController.prototype.clickHandler = function(location) {
@@ -45,8 +49,48 @@ MovementController.prototype.clickHandler = function(location) {
 			this.clickedOnWall();
 		} else if(tile instanceof QuestBlock) {
 			this.clickedOnQuestBlock(this.getNPC({"COL":cords.X, "ROW":cords.Y}));
+		} else if(tile instanceof ItemBlock) {
+			this.clickedOnItemBlock(this.getItem({"COL":cords.X, "ROW":cords.Y}));
 		}
 	}
+}
+
+MovementController.prototype.clickedOnItemBlock = function(item){
+	
+	if(this.lastSelectedItem != null && this.lastSelectedItem == item){
+		
+		if(this.distanceFromPlayer(item) == 1){
+			this.resetSelection();
+			this.OpenItemWindow(item);
+		} else {
+			//get path to target:
+			this.resetSelection();
+			
+			var start = this.map.GetPlayer().GetCords();
+			var finish = {"COL":item.col,"ROW":item.row};
+			
+			//monster in the path? -> splice path
+			var path =  this.generatePath(start,finish);
+			if(path == null) return;
+			path.splice(path.length-1,1);
+			
+			if(this.isMonsterInPath(path)) {
+				return null;
+			} else {
+				//move to target
+				this.map.MovePlayerTo(path);
+				this.OpenItemWindow(item);
+			}
+			
+			return path;
+		}
+		
+	}
+	
+	
+	this.resetSelection();
+	this.lastSelectedItem = item;
+	return true;
 }
 
 MovementController.prototype.clickedOnQuestBlock = function(npc){
@@ -120,6 +164,10 @@ MovementController.prototype.clickedOnMonster = function(monster) {
 	this.resetSelection();
 	this.lastSelectedMonster = monster;
 	return true;
+}
+
+MovementController.prototype.OpenItemWindow = function(item){
+	this.ItemCallback(this.GetPlayer(), item);
 }
 
 MovementController.prototype.OpenNpcWindow = function(target) {
@@ -229,6 +277,10 @@ MovementController.prototype.calculateCords = function(X,Y) {
 
 MovementController.prototype.getNPC = function(cords){
 	return this.map.GetNpc(cords);
+}
+
+MovementController.prototype.getItem = function(cords) {
+	return this.map.GetItem(cords);
 }
 
 MovementController.prototype.GetPlayer = function() {

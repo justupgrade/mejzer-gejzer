@@ -27,9 +27,18 @@ function Map(factory) {
     	//console.log('loaoded');
         self.ParseMonsters(JSON.parse(e.target.responseText)['monsters']);
         self.ParseNpcs(JSON.parse(e.target.responseText)['npcs']);
+        self.ParseItems(JSON.parse(e.target.responseText)['items_in_room']);
         
         self.rawQuestData = JSON.parse(e.target.responseText)['quests'];
         map = self.ParseMap(JSON.parse(e.target.responseText)['room']);
+    }
+    
+    this.ParseItems = function(data){
+    	this.items = [];
+    	
+    	for(var idx in data){
+    		this.items.push(data[idx]);
+    	}
     }
     
     this.ParseNpcs = function(data){
@@ -140,6 +149,19 @@ function Map(factory) {
     	return null;
     }
     
+    this.GetItem = function(location) {
+    	
+    	for(var idx in this.items){
+    		var item = this.items[idx];
+    		if(item.col == location.COL && item.row == location.ROW) {
+    			
+    			return item;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
     this.GetNpcByIdx = function(idx){
     	return this.npcs[idx] ? this.npcs[idx] : null;
     }
@@ -167,6 +189,14 @@ function Map(factory) {
     			break;
     		}
     	}
+    }
+    
+    this.RemoveItem = function(item){
+    	var cell = new Empty();
+    	cell.SetCords({"COL":item.col, "ROW":item.row});
+    	this.map[item.row][item.col] = cell;
+    	var idx = this.items.indexOf(item);
+    	this.items.splice(idx,1);
     }
     
     this.GetMonsters = function() {

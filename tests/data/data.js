@@ -41,6 +41,11 @@ function GameData() {
 		            	 "reward": {"exp": 50, "gold": 200 }
 		             }
 		            ]
+		  ],
+		  "items_in_room": [
+		  	{ "id":1, "col": 6, "row":7 }, 
+		  	{ "id": 6, "col": 6, "row":3 }, 
+		  	{ "id": 10, "col": 6, "row":1 }
 		  ]
 	}
 }

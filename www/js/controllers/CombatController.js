@@ -57,8 +57,8 @@ CombatController.prototype.solveTurn = function() {
 CombatController.prototype.RemoveEnemy = function() {
 	//drop something...
 	if(this.enemy.id == 4) {
-		var item = this.inventoryController.GetNewItemById(10);
-		this.inventoryController.addItem(item);
+		//var item = this.inventoryController.GetNewItemById(10);
+		//this.inventoryController.addItem(item);
 	}
 	this.player.AddKillToHistory(this.enemy.id);
 	this.map.RemoveMonster(this.enemy); //remove enemy from Map()->monsters 

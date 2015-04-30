@@ -93,6 +93,16 @@ function Main() {
     	npcController.Start();
     }
     movementController.SetNpcCallback(this.OpenNpcWindow);
+    
+    this.OpenFoundItemWindow = function(player, item){
+    	//add item to inventory...
+    	var newItem = inventoryController.GetNewItemById(item.id);
+    	inventoryController.addItem(newItem);
+    	map.RemoveItem(item);
+    	
+    	self.Draw();
+    }
+    movementController.SetItemCallback(this.OpenFoundItemWindow);
 
     this.Run = function() {
         if(this.Init()) this.Load();
