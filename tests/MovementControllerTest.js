@@ -41,34 +41,23 @@ AsyncTest.prototype.testAsync = function(queue) {
 
 MovementControllerTest = new TestCase('MovementControllerTest');
 
+MovementControllerTest.prototype.MockCallback = function() {
+	
+}
+
 MovementControllerTest.prototype.setUp = function() {
 	tilesize = 30;
 	controller = new MovementController();
+	controller.SetCombatCallback(this.MockCallback);
 	map = new Map(new MapFactory());
 	controller.SetMap(map);
 	
-	var rawMapData =
-	{
-		    "levels": [
-		               [
-		                   [2,2,2,2,1,2,2,2,2,2,2,2,2,2],
-		                   [2,0,0,0,0,3,5,2,4,0,0,0,0,1],
-		                   [2,3,2,2,2,2,2,2,2,3,2,2,2,2],
-		                   [2,0,0,0,0,2,5,3,0,0,0,3,0,2],
-		                   [2,2,2,2,0,2,2,2,0,2,0,2,0,2],
-		                   [1,0,4,2,0,3,0,0,0,2,0,2,0,2],
-		                   [2,0,2,2,0,2,2,2,2,2,0,2,0,2],
-		                   [2,0,3,0,0,2,5,3,0,0,0,2,6,2],
-		                   [2,2,2,2,2,2,2,2,2,2,2,2,1,2]
-		               ]
-		           ],
-		     "monsters": [
-		          { "type": "monster", "col":11, "row":3 }
-		      ]
-	};
+	var data = new GameData();
+	var rawData = data.rawMapData;
 	
-	map.ParseMap(rawMapData['levels'][0]);
-	map.ParseMonsters(rawMapData['monsters']);
+	map.ParseNpcs(rawData['npcs']);
+	map.ParseMonsters(rawData['monsters']);
+	map.ParseMap(rawData['room']);
 	
 	//jstestdriver.console.log('monster (col,row):' + map.GetMonsters()[0].col + "," +map.GetMonsters()[0].row);
 }

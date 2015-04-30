@@ -6,9 +6,9 @@ function MapFactory() {
     this.Gate = null;
     this.Wall = null;
     this.Monster = null;
-    this.Player = null;
-    this.Item = null;
-    this.Quest = null;
+    this.PlayerBlock = null;
+    this.ItemBlock = null;
+    this.QuestBlock = null;
     this.Floor = null;
 
     var imgsLoaded = 0;
@@ -92,18 +92,18 @@ function Monster() {
     }
 }
 
-function Quest() {
+function QuestBlock() {
     this.GetImage = function() {
-        return this.ImageRepository.Quest;
+        return this.ImageRepository.QuestBlock;
     }
     this.GetFillStyle = function() {
         return "rgba(0,0,200,1)"; //blue
     }
 }
 
-function Item() {
+function ItemBlock() {
     this.GetImage = function() {
-        return this.ImageRepository.Item;
+        return this.ImageRepository.ItemBlock;
     }
     this.GetFillStyle = function() {
         return "rgba(0,200,0,1)"; //green
@@ -129,7 +129,7 @@ Floor.prototype = new MapBlock();
 Floor.prototype.constructor = Floor;
 Monster.prototype = new MapBlock();
 Monster.prototype.constructor = Monster;
-Item.prototype = new MapBlock();
-Item.prototype.constructor = Item;
-Quest.prototype = new MapBlock();
-Quest.prototype.constructor = Quest;
+ItemBlock.prototype = new MapBlock();
+ItemBlock.prototype.constructor = ItemBlock;
+QuestBlock.prototype = new MapBlock();
+QuestBlock.prototype.constructor = QuestBlock;

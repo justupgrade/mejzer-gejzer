@@ -8,10 +8,11 @@ function MonsterFactory() {
 		
 		var type = data.type;
 		
-		if(type === "monster"){
+		if(type === "mele"){
 			monster = new MeleEnemy();
 		}
 		
+		monster.id = data.id;
 		monster.type = data.type;
 		monster.col = data.col;
 		monster.row = data.row;

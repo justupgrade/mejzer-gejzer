@@ -5,6 +5,10 @@ function Map(factory) {
     this.loaded = false;
     this.cols = 0;
     this.rows = 0;
+    
+    this.rawQuestData = null;
+    
+    
     var self = this;
     var tileSize = 30;
 
@@ -21,8 +25,22 @@ function Map(factory) {
 
     this.OnMapLoadHandler = function(e){
     	//console.log('loaoded');
-        map = self.ParseMap(JSON.parse(e.target.responseText)['room']);
         self.ParseMonsters(JSON.parse(e.target.responseText)['monsters']);
+        self.ParseNpcs(JSON.parse(e.target.responseText)['npcs']);
+        
+        self.rawQuestData = JSON.parse(e.target.responseText)['quests'];
+        map = self.ParseMap(JSON.parse(e.target.responseText)['room']);
+    }
+    
+    this.ParseNpcs = function(data){
+    	var factory = new NpcFactory();
+    	
+    	this.npcs = [];
+    	
+    	for(var idx in data){
+    		var descriptor = data[idx];
+    		this.npcs.push(factory.create(descriptor));
+    	}
     }
     
     this.ParseMonsters = function(data){
@@ -55,8 +73,8 @@ function Map(factory) {
                     case 1: cell = new Gate(); break;
                     case 2: cell = new Wall(); break;
                     case 3: cell = new Monster(); break;
-                    case 4: cell = new Quest(); break;
-                    case 5: cell = new Item(); break;
+                    case 4: cell = new QuestBlock(); break;
+                    case 5: cell = new ItemBlock(); break;
                     case 6: 
                     	cell = new Empty();
                     	this.player = new Player();
@@ -119,6 +137,21 @@ function Map(factory) {
     			return monster;
     		}
     	}
+    	return null;
+    }
+    
+    this.GetNpcByIdx = function(idx){
+    	return this.npcs[idx] ? this.npcs[idx] : null;
+    }
+    
+    this.GetNpc = function(location) {
+    	for(var idx in this.npcs){
+    		var npc = this.npcs[idx];
+    		if(npc.col == location.COL && npc.row == location.ROW) {
+    			return npc;
+    		}
+    	}
+    	
     	return null;
     }
     

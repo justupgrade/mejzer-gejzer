@@ -17,6 +17,12 @@ MovementController.prototype.SetCombatCallback = function(value) {
 	this.CombatCallback = value;
 }
 
+
+MovementController.prototype.SetNpcCallback = function(value) {
+	this.NpcCallback = value;
+}
+
+
 //------------------- click actions ---------------
 MovementController.prototype.clickHandler = function(location) {
 	var cords = this.calculateCords(location.X, location.Y);
@@ -37,14 +43,52 @@ MovementController.prototype.clickHandler = function(location) {
 		} else if(tile instanceof Wall) {
 			//console.log('wall');
 			this.clickedOnWall();
+		} else if(tile instanceof QuestBlock) {
+			this.clickedOnQuestBlock(this.getNPC({"COL":cords.X, "ROW":cords.Y}));
 		}
 	}
+}
+
+MovementController.prototype.clickedOnQuestBlock = function(npc){
+	//console.log(npc);
+	if(this.lastSelectedNpc != null && this.lastSelectedNpc == npc){
+		
+		if(this.distanceFromPlayer(npc) == 1){
+			this.resetSelection();
+			this.OpenNpcWindow(npc);
+		} else {
+			this.resetSelection();
+			var start = this.map.GetPlayer().GetCords();
+			var finish = {"COL":npc.col,"ROW":npc.row};
+			var path =  this.generatePath(start,finish);
+			
+			if(path == null) return null;
+			
+			path.splice(path.length-1,1); //no need to stand on npc tile...
+			
+			if(this.isMonsterInPath(path)) {
+				return null;
+			} else {
+				//move to target
+				this.map.MovePlayerTo(path);
+				//open combat window
+				this.OpenNpcWindow(npc);
+			}
+			
+			return path;
+		}
+	}
+	
+	this.resetSelection();
+	this.lastSelectedNpc = npc;
+	return true;
 }
 
 MovementController.prototype.clickedOnMonster = function(monster) {
 	if(this.lastSelectedMonster != null && this.lastSelectedMonster == monster){
 		//move close to monster (if not aleady and open fight menu)
 		if(this.distanceFromPlayer(monster) == 1){
+			this.resetSelection();
 			//open combat window...
 			this.OpenCombatWindow(monster);
 		} else {
@@ -72,13 +116,15 @@ MovementController.prototype.clickedOnMonster = function(monster) {
 		
 	}
 	
-	if(this.lastSelectedMonster == null) {
-		this.lastSelectedMonster = monster;
-		
-		return true;
-	}
-	
-	return 'nothing_happend';
+
+	this.resetSelection();
+	this.lastSelectedMonster = monster;
+	return true;
+}
+
+MovementController.prototype.OpenNpcWindow = function(target) {
+	//callback?
+	this.NpcCallback(this.GetPlayer(), target);
 }
 
 MovementController.prototype.OpenCombatWindow = function(monster) {
@@ -86,13 +132,15 @@ MovementController.prototype.OpenCombatWindow = function(monster) {
 	this.CombatCallback(this.GetPlayer(), monster);
 }
 
-MovementController.prototype.distanceFromPlayer = function(monster) {
+MovementController.prototype.distanceFromPlayer = function(target) {
 	var playerLocation = this.GetPlayer().GetCords();
 	
-	if(Math.abs(playerLocation.COL - monster.col) != 1 || 
-			Math.abs(playerLocation.ROW - monster.row != 1)) return 0;
+	//console.log(target.col,target.row);
 	
-	return 1;
+	if(Math.abs(playerLocation.COL - target.col) <= 1 &&
+			Math.abs(playerLocation.ROW - target.row <= 1)) return 1;
+	
+	return 0;
 }
 
 MovementController.prototype.clickedOnWall = function() {
@@ -177,6 +225,10 @@ MovementController.prototype.calculateCords = function(X,Y) {
 	if(col >= this.map.GetWidth() || row >= this.map.GetHeight() || col < 0 || row < 0) return null;
 	
 	return {"X":col, "Y":row};
+}
+
+MovementController.prototype.getNPC = function(cords){
+	return this.map.GetNpc(cords);
 }
 
 MovementController.prototype.GetPlayer = function() {

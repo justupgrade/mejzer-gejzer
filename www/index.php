@@ -11,13 +11,20 @@
     
     <script type="text/javascript" src="./js/MapBlock.js"></script>
     <script type="text/javascript" src="./js/models/Player.js"></script>
+    <script type="text/javascript" src="./js/models/Npc.js"></script>
+    <script type="text/javascript" src="./js/models/Quest.js"></script>
+    
     <script type="text/javascript" src="./js/AI/Tile.js"></script>
     <script type="text/javascript" src="./js/AI/Grid.js"></script>
     <script type="text/javascript" src="./js/AI/Pathfinder.js"></script>
     
     <script type="text/javascript" src="./js/controllers/MovementController.js"></script>
     <script type="text/javascript" src="./js/controllers/CombatController.js"></script>
+    <script type="text/javascript" src="./js/controllers/NpcController.js"></script>
+    <script type="text/javascript" src="./js/controllers/QuestController.js"></script>
     <script type="text/javascript" src="./js/controllers/MonsterFactory.js"></script>
+    <script type="text/javascript" src="./js/controllers/NpcFactory.js"></script>
+    <script type="text/javascript" src="./js/controllers/QuestFactory.js"></script>
     
     <script type="text/javascript" src="./js/Map.js"></script>
     <script type="text/javascript" src="./js/Main.js"></script>

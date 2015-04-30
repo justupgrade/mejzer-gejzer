@@ -7,6 +7,7 @@ function Main() {
     var bufferCtx;
     var movementController = new MovementController();
     var combatController = new CombatController();
+    var npcController = new NpcController();
     
 
     var self = this;
@@ -52,6 +53,8 @@ function Main() {
 
     this.GameReady = function(evt) {
         if(map.loaded) {
+        	npcController.load(map.rawQuestData);
+        	
         	movementController.SetMap(map);
             clearInterval(self.InitListener);
             self.Draw();
@@ -78,8 +81,14 @@ function Main() {
     	combatController.init(player,monster);
     	combatController.solveCombat();
     }
-    
     movementController.SetCombatCallback(this.OpenCombatWindow);
+    
+    this.OpenNpcWindow = function(player, npc){
+    	npcController.SetMap(map);
+    	npcController.init(player,npc, this);
+    	npcController.Start();
+    }
+    movementController.SetNpcCallback(this.OpenNpcWindow);
 
     this.Run = function() {
         if(this.Init()) this.Load();

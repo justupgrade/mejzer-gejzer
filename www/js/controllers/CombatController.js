@@ -54,6 +54,7 @@ CombatController.prototype.RemoveEnemy = function() {
 	//remove monster tile from Map()->map :: change to Empty
 	//redraw map
 	//alert('enemy died!');
+	this.player.AddKillToHistory(this.enemy.id);
 	this.map.RemoveMonster(this.enemy);
 	
 }
