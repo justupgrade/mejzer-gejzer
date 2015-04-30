@@ -13,14 +13,25 @@ function Player() {
 	
 	//mele warrior lvl 1
 	this.strength = 5;
+	this.weaponBonus = 0;
+	
 	this.defence = 2;
 	this.speed = 3;
 	this.range = 1;
+	
 	this.armor = 10;
+	this.armorBonus = 0;
+	
 	this.hp = 10;
 	this.currentHP = 10;
 	
 	var self = this;
+	
+	this.inventory = new Inventory();//empty inventory...
+	
+	this.GetInventory = function() {
+		return this.inventory;
+	}
 	
 	this.GetImage = function() {
         return this.ImageRepository.Empty;
@@ -92,6 +103,20 @@ function Player() {
     
     this.WasEnemyKilled = function(monster_id){
     	return this.killHistory.indexOf(monster_id) == -1 ? false : true;
+    }
+    
+    this.Update = function() {
+    	//update stats after inventory change...
+    	this.weaponBonus = this.inventory.GetWeaponDamage(this.strength);
+    	this.armorBonus = this.inventory.GetArmorProtection(this.armor);
+    }
+    
+    this.GetAttack = function() {
+    	return (this.strength + this.weaponBonus);
+    }
+    
+    this.GetArmor = function() {
+    	return (this.armor + this.armorBonus);
     }
 }
 
