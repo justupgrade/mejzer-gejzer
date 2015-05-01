@@ -10,6 +10,40 @@ function SystemController() {
 	this.cols = 0;
 	this.row = 0;
 	this.lastLvlID = 0;
+	this.current = null;
+}
+
+SystemController.prototype.setUpNewSystem = function(gate, mapSize) {
+	var direction = this.getDirection(gate,mapSize); //left,right,top,bottom
+	var connections = this.getConnections(this.current);
+	
+	//console.log(direction, connections);
+	
+	var newRoom;
+	var idx;
+	
+	for(idx in connections){
+		if(connections[idx][direction]) {
+			newRoom = connections[idx][direction];
+			break;
+		}
+	}
+	
+	this.current = newRoom;
+	this.lastLvlID = newRoom.id;
+}
+
+SystemController.prototype.getDirection = function(gate,size){
+	var direction = null;
+	
+	//console.log(gate.col,gate.row,size);
+	
+	if(gate.col == 0) direction = "left";
+	else if(gate.row == 0) direction = "top";
+	else if(gate.col == size.cols-1) direction ="right";
+	else if(gate.row == size.rows-1) direction = "bottom";
+	
+	return direction;
 }
 
 SystemController.prototype.ParseSystem = function(data){
@@ -40,8 +74,14 @@ SystemController.prototype.updatePlayerStartingPosition = function(map) {
 //remove gates from map that should not be there...
 SystemController.prototype.updateGates = function(system,map) {
 	if(system === null) {
-		system = this.getSystemById(this.lastLvlID);
+		if(!this.current){
+			system = this.getSystemById(this.lastLvlID, map.GetSize());
+			this.current = system;
+		} else {
+			system = this.current;
+		}
 	}
+	
 	var connections = this.getConnections(system);
 
 	var directions = [];
@@ -134,8 +174,20 @@ SystemController.prototype.getStartingSystem = function() {
 	return null; //no gate found -> error
 }
 
-SystemController.prototype.getSystemById = function(id) {
+SystemController.prototype.getSystemById = function(id,size) {
 	if(id === 0) return this.getStartingSystem();
+	else {
+		var system;
+		for(var row = 0; row < size.rows; row++){
+			for(var col = 0; col < size.cols; col++){
+				if(system = this.rooms[row][col]) {
+					if(system.id == id) return system;
+				}
+			}
+		}
+	}
+	
+	return null; //error
 }
 
 SystemController.prototype.GetLastLvlID = function() {

@@ -19,7 +19,7 @@ function Map(factory) {
      */
     this.Load = function(lvl) {
         var formdata = new FormData();
-        formdata.append('lvl', lvl);
+        formdata.append('lvl', 0);
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', this.OnMapLoadHandler); //this.onMapLoadHandler
         xhr.open('POST', './actions/load_level.php');
@@ -249,5 +249,9 @@ function Map(factory) {
     	var finish = path[path.length-1];
     	
     	this.player.SetCords({"COL":finish.getCol(), "ROW":finish.getRow()});
+    }
+    
+    this.GetSize = function() {
+    	return {'cols':this.cols, 'rows':this.rows};
     }
 }

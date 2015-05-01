@@ -9,6 +9,8 @@ function Main() {
     var combatController = new CombatController();
     var npcController = new NpcController();
     var inventoryController = new InventoryController();
+    combatController.AddInventoryController(inventoryController);
+    
     var self = this;
 
     this.InitListener = null;
@@ -50,22 +52,42 @@ function Main() {
     }
 
     this.GameReady = function(evt) {
+    	console.log('loading inital...');
         if(map.loaded && inventoryController.loaded) {
+        	map.loaded = false;
         	//update map...
         	self.systemController.updateGates(null,map);
         	//set references...
-        	combatController.AddInventoryController(inventoryController);
-        	npcController.load(map.rawQuestData);
+        	
+        	npcController.load(map.rawQuestData); //quests for loaded map
+        	
         	inventoryController.SetPlayer(map.GetPlayer());
         	
         	movementController.SetMap(map);
-        	
         	
             clearInterval(self.InitListener);
             self.Draw();
             //ready...
             self.Start();
         }
+    }
+    
+    this.GameLoaded = function(evt){
+    	console.log('loading new lvl...');
+    	if(map.loaded){
+    		map.loaded = false;
+    		clearInterval(self.InitListener);
+    		self.InitListener = null;
+    		
+    		self.systemController.updateGates(null,map);
+    		npcController.load(map.rawQuestData);
+    		inventoryController.SetPlayer(map.GetPlayer());
+    		movementController.SetMap(map);
+    		
+    		
+    		self.Draw();
+    		console.log('loaded new lvl');
+    	}
     }
 
     this.Start = function() {
@@ -105,7 +127,11 @@ function Main() {
     movementController.SetItemCallback(this.OpenFoundItemWindow);
     
     this.OpenGateWindow = function(player,gate) {
-    	alert('gate clicked');
+    	//system controller -> change system; this->load new map...
+    	self.systemController.setUpNewSystem(gate,map.GetSize());
+    	map.Load(self.systemController.GetLastLvlID());
+    	
+    	self.InitListener = setInterval(self.GameLoaded, 50);
     }
     
     movementController.SetGateCallback(this.OpenGateWindow);

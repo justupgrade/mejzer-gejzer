@@ -56,7 +56,8 @@ function GameData() {
 		        {
 		            "type": "gate",
 		            "col": 3,
-		            "row": 0
+		            "row": 0,
+		            "id":0
 		        },
 		        null,
 		        null,
@@ -69,7 +70,8 @@ function GameData() {
 		        {
 		            "type": "room",
 		            "col": 3,
-		            "row": 1
+		            "row": 1,
+		            "id":1
 		        },
 		        null,
 		        null,
@@ -82,14 +84,16 @@ function GameData() {
 		        {
 		            "type": "room",
 		            "col": 3,
-		            "row": 2
+		            "row": 2,
+		            "id":2
 		        },
 		        null,
 		        null,
 		        {
 		            "type": "gate",
 		            "col": 6,
-		            "row": 2
+		            "row": 2,
+		            "id":3
 		        }
 		    ],
 		    [
@@ -99,44 +103,52 @@ function GameData() {
 		        {
 		            "type": "center",
 		            "col": 3,
-		            "row": 3
+		            "row": 3,
+		            "id":4
 		        },
 		        {
 		            "type": "room",
 		            "col": 4,
-		            "row": 3
+		            "row": 3,
+		            "id":5
 		        },
 		        {
 		            "type": "room",
 		            "col": 5,
-		            "row": 3
+		            "row": 3,
+		            "id":6
 		        },
 		        {
 		            "type": "room",
 		            "col": 6,
-		            "row": 3
+		            "row": 3,
+		            "id":7
 		        }
 		    ],
 		    [
 		        {
 		            "type": "gate",
 		            "col": 0,
-		            "row": 4
+		            "row": 4,
+		            "id":8
 		        },
 		        {
 		            "type": "room",
 		            "col": 1,
-		            "row": 4
+		            "row": 4,
+		            "id":9
 		        },
 		        {
 		            "type": "room",
 		            "col": 2,
-		            "row": 4
+		            "row": 4,
+		            "id":10
 		        },
 		        {
 		            "type": "room",
 		            "col": 3,
-		            "row": 4
+		            "row": 4,
+		            "id":11
 		        },
 		        null,
 		        null,
@@ -149,7 +161,8 @@ function GameData() {
 		        {
 		            "type": "room",
 		            "col": 3,
-		            "row": 5
+		            "row": 5,
+		            "id":12
 		        },
 		        null,
 		        null,
@@ -162,7 +175,8 @@ function GameData() {
 		        {
 		            "type": "gate",
 		            "col": 3,
-		            "row": 6
+		            "row": 6,
+		            "id":13
 		        },
 		        null,
 		        null,
