@@ -25,7 +25,6 @@ function Main() {
 
 
     this.Init = function() {
-    	
         factory = new MapFactory();
         map = new Map(factory);
 
@@ -36,15 +35,13 @@ function Main() {
         buffer.width = _canvas.width;
         buffer.height = _canvas.height;
         bufferCtx = buffer.getContext('2d');
-        
-       
 
         return true;
     }
 
     this.Load = function() {
         factory.Load();
-        map.Load();
+        map.Load(self.systemController.GetLastLvlID());
         inventoryController.Load();
 
         //set listener...
@@ -56,14 +53,18 @@ function Main() {
 
     this.GameReady = function(evt) {
         if(map.loaded && inventoryController.loaded) {
+        	//update map...
+        	self.systemController.updateGates(null,map);
+        	//set references...
         	combatController.AddInventoryController(inventoryController);
         	npcController.load(map.rawQuestData);
         	inventoryController.SetPlayer(map.GetPlayer());
         	
         	movementController.SetMap(map);
+        	
+        	
             clearInterval(self.InitListener);
             self.Draw();
-
             //ready...
             self.Start();
         }

@@ -14,10 +14,12 @@ function Map(factory) {
     var tileSize = 30;
 
 
-
+    /*
+     *  lvl -> mazeID
+     */
     this.Load = function(lvl) {
         var formdata = new FormData();
-        formdata.append('lvl', 0);
+        formdata.append('lvl', lvl);
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', this.OnMapLoadHandler); //this.onMapLoadHandler
         xhr.open('POST', './actions/load_level.php');
@@ -210,7 +212,7 @@ function Map(factory) {
     		}
     	}
     	//put wall in gui:
-    	var cell = new Empty();
+    	var cell = new Wall();
     	cell.SetCords({"COL":gate.col, "ROW":gate.row});
     	this.map[gate.row][gate.col] = cell;
     	//remove gate from memory...

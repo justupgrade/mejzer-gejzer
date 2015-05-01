@@ -1,11 +1,15 @@
 /**
- * 
+ * controlls system! =D
+ * chooses right map (maze/room) to load
+ * chooses right gates to display
+ * chooses right player position on map init...
  */
 
 function SystemController() {
-	this.rooms = [];
+	this.rooms = [];//cords of connected rooms
 	this.cols = 0;
 	this.row = 0;
+	this.lastLvlID = 0;
 }
 
 SystemController.prototype.ParseSystem = function(data){
@@ -24,8 +28,20 @@ SystemController.prototype.ParseSystem = function(data){
 	}
 }
 
+SystemController.prototype.updatePlayerStartingPosition = function(map) {
+	//...
+}
+
+/*
+ * if system = null -> system controller will somehow(=D) figure out which system
+ * to update...
+ * very smart code in here :D
+ */
 //remove gates from map that should not be there...
 SystemController.prototype.updateGates = function(system,map) {
+	if(system === null) {
+		system = this.getSystemById(this.lastLvlID);
+	}
 	var connections = this.getConnections(system);
 
 	var directions = [];
@@ -104,6 +120,8 @@ SystemController.prototype.getConnections = function(room){
 }
 
 //returns first found 'exit'...
+//this system ID = 0
+//next system that player visits will have id+1, and will be saved somewhere...
 SystemController.prototype.getStartingSystem = function() {
 	for(var row = 0; row < this.rows; row++){
 		for(var col=0; col < this.cols; col++){
@@ -115,3 +133,19 @@ SystemController.prototype.getStartingSystem = function() {
 	
 	return null; //no gate found -> error
 }
+
+SystemController.prototype.getSystemById = function(id) {
+	if(id === 0) return this.getStartingSystem();
+}
+
+SystemController.prototype.GetLastLvlID = function() {
+	//get that from player profile
+	return this.lastLvlID;
+}
+
+
+
+
+
+
+
