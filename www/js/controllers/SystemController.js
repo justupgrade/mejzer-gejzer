@@ -11,6 +11,7 @@ function SystemController() {
 	this.row = 0;
 	this.lastLvlID = 0;
 	this.current = null;
+	this.entrance = null;
 }
 
 SystemController.prototype.setUpNewSystem = function(gate, mapSize) {
@@ -38,10 +39,22 @@ SystemController.prototype.getDirection = function(gate,size){
 	
 	//console.log(gate.col,gate.row,size);
 	
-	if(gate.col == 0) direction = "left";
-	else if(gate.row == 0) direction = "top";
-	else if(gate.col == size.cols-1) direction ="right";
-	else if(gate.row == size.rows-1) direction = "bottom";
+	if(gate.col == 0){
+		direction = "left";
+		this.entrance = "right";
+	}
+	else if(gate.row == 0){
+		direction = "top";
+		this.entrance = "bottom";
+	}
+	else if(gate.col == size.cols-1){
+		direction ="right";
+		this.entrance = "left";
+	}
+	else if(gate.row == size.rows-1){
+		direction = "bottom";
+		this.entrance = "top";
+	}
 	
 	return direction;
 }
@@ -63,7 +76,17 @@ SystemController.prototype.ParseSystem = function(data){
 }
 
 SystemController.prototype.updatePlayerStartingPosition = function(map) {
-	//...
+	//move player to the entrance (if exists)
+	if(this.entrance){
+		var gate = map.GetGateByDescriptor(this.getGateDescriptor(map,this.entrance));
+		var directions = {"left": [0,-1], "right":  [0,1], "top":  [-1,0], "bottom":  [1,0] };
+		//reverse directions result!!!
+		var change = directions[this.entrance];
+		var newRow = gate.row - change[0];
+		var newCol = gate.col - change[1];
+		
+		map.UpdatePlayerPostion({"COL":newCol, "ROW":newRow});
+	}
 }
 
 /*

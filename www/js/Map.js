@@ -160,6 +160,16 @@ function Map(factory) {
     	return null;
     }
     
+    this.GetGateByDescriptor = function(data){	
+    	for(var gateIDX in this.gates){
+    		if(this.gates[gateIDX][data.key] == data.value){
+    			return this.gates[gateIDX];
+    		}
+    	}
+    	
+    	return null; //error...
+    }
+    
     this.GetMonster = function(location) {
     	for(var idx in this.monsters){
     		var monster = this.monsters[idx];
@@ -249,6 +259,10 @@ function Map(factory) {
     	var finish = path[path.length-1];
     	
     	this.player.SetCords({"COL":finish.getCol(), "ROW":finish.getRow()});
+    }
+    
+    this.UpdatePlayerPostion = function(cords){
+    	this.player.SetCords({"COL":cords.COL, "ROW":cords.ROW});
     }
     
     this.GetSize = function() {

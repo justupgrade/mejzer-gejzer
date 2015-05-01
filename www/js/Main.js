@@ -80,6 +80,8 @@ function Main() {
     		self.InitListener = null;
     		
     		self.systemController.updateGates(null,map);
+    		self.systemController.updatePlayerStartingPosition(map);
+    		
     		npcController.load(map.rawQuestData);
     		inventoryController.SetPlayer(map.GetPlayer());
     		movementController.SetMap(map);
