@@ -3,14 +3,26 @@
  * this file sits in www directory [main dir]
  */
 
+
+loadGame();
+
 //generate (or load) system first!
-var xhr = new XMLHttpRequest();
-xhr.open('POST', 'actions/generate_game.php');
-xhr.addEventListener('load', onGameGeneratedHandler);
-xhr.send(null);
+function newGame() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'actions/generate_system.php');
+	xhr.addEventListener('load', onGameGeneratedHandler);
+	xhr.send(null); //send user data in future
+}
+
+function loadGame() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'actions/load_system.php');
+	xhr.addEventListener('load', onGameGeneratedHandler);
+	xhr.send(null); //send user data in future
+}
 
 function onGameGeneratedHandler(e) {
-	alert(e.target.responseText);
+	var new_system_data = JSON.parse(e.target.responseText);
 	var game = new Main();
 	game.Run();
 }
