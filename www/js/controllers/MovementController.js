@@ -106,7 +106,10 @@ MovementController.prototype.clickedOnQuestBlock = function(npc){
 			var finish = {"COL":npc.col,"ROW":npc.row};
 			var path =  this.generatePath(start,finish);
 			
-			if(path == null) return null;
+			if(path == null){
+				//alert('null path');
+				return null;
+			}
 			
 			path.splice(path.length-1,1); //no need to stand on npc tile...
 			
@@ -115,7 +118,7 @@ MovementController.prototype.clickedOnQuestBlock = function(npc){
 			} else {
 				//move to target
 				this.map.MovePlayerTo(path);
-				//open combat window
+				//open quest window 
 				this.OpenNpcWindow(npc);
 			}
 			
@@ -246,6 +249,8 @@ MovementController.prototype.generatePath = function(start,finish) {
 	pathfinder.setGrid(grid);
 	pathfinder.setStartPoint(start.COL,start.ROW);
 	pathfinder.setFinishPoint(finish.COL,finish.ROW);
+	
+	//console.log(pathfinder.finish);
 	var path = pathfinder.findPath();
 	
 	return path;

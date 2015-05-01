@@ -36,7 +36,7 @@ Grid.prototype.generateFromMap = function(map) {
         for(var col=0; col < map[0].length; col++) {
             tile = new Tile(col,row);
             if(map[row][col] instanceof Monster === true) tile.SetMonster(true);
-            else if(map[row][col] instanceof Empty === false) tile.setType(1); //block
+            else if(map[row][col] instanceof Wall === true) tile.setType(1); //block
             rows.push(tile);
         }
         this.grid.push(rows);
