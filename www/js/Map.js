@@ -7,6 +7,7 @@ function Map(factory) {
     this.rows = 0;
     
     this.rawQuestData = null;
+    this.gates = [];
     
     
     var self = this;
@@ -79,7 +80,10 @@ function Map(factory) {
                 type = data[row][col];
                 switch(type){
                     case 0: cell = new Empty(); break;
-                    case 1: cell = new Gate(); break;
+                    case 1: 
+                    	cell = new Gate(); 
+                    	this.gates.push(cell);
+                    	break;
                     case 2: cell = new Wall(); break;
                     case 3: cell = new Monster(); break;
                     case 4: cell = new QuestBlock(); break;
@@ -139,6 +143,21 @@ function Map(factory) {
     	return this.rows;
     }
     
+    this.GetGates = function() {
+    	return this.gates;
+    }
+    
+    this.GetGate = function(location){
+    	for(var idx in this.gates){
+    		var gate = this.gates[idx];
+    		if(gate.col == location.COL && gate.row == location.ROW){
+    			return gate;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
     this.GetMonster = function(location) {
     	for(var idx in this.monsters){
     		var monster = this.monsters[idx];
@@ -175,6 +194,27 @@ function Map(factory) {
     	}
     	
     	return null;
+    }
+    
+    this.RemoveGate = function(data){
+    	var key = data.key; //COL or ROW
+    	var value = data.value;
+    	
+    	//find gate -> 
+    	var gate;
+    	var gateIDX;
+    	
+    	for(gateIDX in this.gates){
+    		if(this.gates[gateIDX][key] == value){
+    			gate = this.gates[gateIDX]; break;
+    		}
+    	}
+    	//put wall in gui:
+    	var cell = new Empty();
+    	cell.SetCords({"COL":gate.col, "ROW":gate.row});
+    	this.map[gate.row][gate.col] = cell;
+    	//remove gate from memory...
+    	this.gates.splice(gateIDX,1);
     }
     
     this.RemoveMonster = function(enemy){

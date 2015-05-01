@@ -41,17 +41,17 @@ NpcController.prototype.AddQuest = function(questIDX) {
 	} else if(quest === true) {
 		//quest objective completed!!! reward player
 		this.player.CompleteQuest(this.player.ActiveQuest); 
-		alert("Quest Completed!!!");
+		console.log("Quest Completed!!!");
 	} else if(quest === null){
 		//quest active but not completed -> set as ActiveQuest...
-		alert("Already Active! " + this.player.ActiveQuest.GetQuestTitle());
+		console.log("Already Active! " + this.player.ActiveQuest.GetQuestTitle());
 	} else {
 		//new quest...
 		if(quest.IsCompleted(this.player)) {
 			this.player.CompleteQuest(quest); 
-			alert("Quest Completed!!!");
+			console.log("Quest Completed!!!");
 		} else {
-			alert("Quest Activated! " + quest.GetQuestTitle());
+			console.log("Quest Activated! " + quest.GetQuestTitle());
 		}
 	}
 

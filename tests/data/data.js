@@ -46,6 +46,128 @@ function GameData() {
 		  	{ "id":1, "col": 6, "row":7 }, 
 		  	{ "id": 6, "col": 6, "row":3 }, 
 		  	{ "id": 10, "col": 6, "row":1 }
-		  ]
+		  ],
+		  "system": 
+		  [
+		    [
+		        null,
+		        null,
+		        null,
+		        {
+		            "type": "gate",
+		            "col": 3,
+		            "row": 0
+		        },
+		        null,
+		        null,
+		        null
+		    ],
+		    [
+		        null,
+		        null,
+		        null,
+		        {
+		            "type": "room",
+		            "col": 3,
+		            "row": 1
+		        },
+		        null,
+		        null,
+		        null
+		    ],
+		    [
+		        null,
+		        null,
+		        null,
+		        {
+		            "type": "room",
+		            "col": 3,
+		            "row": 2
+		        },
+		        null,
+		        null,
+		        {
+		            "type": "gate",
+		            "col": 6,
+		            "row": 2
+		        }
+		    ],
+		    [
+		        null,
+		        null,
+		        null,
+		        {
+		            "type": "center",
+		            "col": 3,
+		            "row": 3
+		        },
+		        {
+		            "type": "room",
+		            "col": 4,
+		            "row": 3
+		        },
+		        {
+		            "type": "room",
+		            "col": 5,
+		            "row": 3
+		        },
+		        {
+		            "type": "room",
+		            "col": 6,
+		            "row": 3
+		        }
+		    ],
+		    [
+		        {
+		            "type": "gate",
+		            "col": 0,
+		            "row": 4
+		        },
+		        {
+		            "type": "room",
+		            "col": 1,
+		            "row": 4
+		        },
+		        {
+		            "type": "room",
+		            "col": 2,
+		            "row": 4
+		        },
+		        {
+		            "type": "room",
+		            "col": 3,
+		            "row": 4
+		        },
+		        null,
+		        null,
+		        null
+		    ],
+		    [
+		        null,
+		        null,
+		        null,
+		        {
+		            "type": "room",
+		            "col": 3,
+		            "row": 5
+		        },
+		        null,
+		        null,
+		        null
+		    ],
+		    [
+		        null,
+		        null,
+		        null,
+		        {
+		            "type": "gate",
+		            "col": 3,
+		            "row": 6
+		        },
+		        null,
+		        null,
+		        null
+		    ]
+		]
 	}
 }
