@@ -11,6 +11,11 @@ MovementController = function() {
 	this.lastSelectedMonster = null;
 	this.lastSelectedNpc = null;
 	this.lastSelectedItem = null;
+	this.lastSelectedGate = null;
+}
+
+MovementController.prototype.SetGateCallback = function(value) {
+	this.GateCallback = value;
 }
 
 MovementController.prototype.SetCombatCallback = function(value) {
@@ -43,7 +48,7 @@ MovementController.prototype.clickHandler = function(location) {
 			//console.log('monster');
 			this.clickedOnMonster(this.getMonster({"COL":cords.X, "ROW":cords.Y}));
 		} else if(tile instanceof Gate) {
-			//console.log('gate');
+			this.clickedOnGate(this.GetGate({"COL":cords.X, "ROW":cords.Y}));
 		} else if(tile instanceof Wall) {
 			//console.log('wall');
 			this.clickedOnWall();
@@ -53,6 +58,43 @@ MovementController.prototype.clickHandler = function(location) {
 			this.clickedOnItemBlock(this.getItem({"COL":cords.X, "ROW":cords.Y}));
 		}
 	}
+}
+
+MovementController.prototype.clickedOnGate = function(gate){
+	if(this.lastSelectedGate != null && this.lastSelectedGate == gate){
+		
+		if(this.distanceFromPlayer(gate) == 1){
+			this.resetSelection();
+			this.OpenGateWindow(gate);
+		} else {
+			//get path to target:
+			this.resetSelection();
+			
+			var start = this.map.GetPlayer().GetCords();
+			var finish = {"COL":gate.col,"ROW":gate.row};
+			
+			//monster in the path? -> splice path
+			var path =  this.generatePath(start,finish);
+			if(path == null) return;
+			path.splice(path.length-1,1);
+			
+			if(this.isMonsterInPath(path)) {
+				return null;
+			} else {
+				//move to target
+				this.map.MovePlayerTo(path);
+				this.OpenGateWindow(gate);
+			}
+			
+			return path;
+		}
+		
+	}
+	
+	
+	this.resetSelection();
+	this.lastSelectedGate = gate;
+	return true;
 }
 
 MovementController.prototype.clickedOnItemBlock = function(item){
@@ -169,6 +211,10 @@ MovementController.prototype.clickedOnMonster = function(monster) {
 	return true;
 }
 
+MovementController.prototype.OpenGateWindow = function(gate){
+	this.GateCallback(this.GetPlayer(), gate);
+}
+
 MovementController.prototype.OpenItemWindow = function(item){
 	this.ItemCallback(this.GetPlayer(), item);
 }
@@ -263,6 +309,7 @@ MovementController.prototype.resetSelection = function() {
 	this.lastSelectedMonster = null;
 	this.lastSelectedNpc = null;
 	this.lastSelectedItem = null;
+	this.lastSelectedGate = null;
 }
 
 //----------------------------------------------------
@@ -290,6 +337,10 @@ MovementController.prototype.getItem = function(cords) {
 
 MovementController.prototype.GetPlayer = function() {
 	return this.map.GetPlayer();
+}
+
+MovementController.prototype.GetGate = function(cords){
+	return this.map.GetGate(cords);
 }
 
 MovementController.prototype.getTile = function(cords){

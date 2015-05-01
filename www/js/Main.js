@@ -22,8 +22,6 @@ function Main() {
         return this.player;
     }
 
-
-
     this.Init = function() {
         factory = new MapFactory();
         map = new Map(factory);
@@ -105,6 +103,12 @@ function Main() {
     	self.Draw();
     }
     movementController.SetItemCallback(this.OpenFoundItemWindow);
+    
+    this.OpenGateWindow = function(player,gate) {
+    	alert('gate clicked');
+    }
+    
+    movementController.SetGateCallback(this.OpenGateWindow);
 
     this.Run = function() {
         if(this.Init()) this.Load();
