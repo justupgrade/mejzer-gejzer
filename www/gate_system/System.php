@@ -69,6 +69,34 @@
 			return array($left, $top, $right, $bottom);
 		}
 		
+		// --------------- save to json -------------------
+		public function serializeSystem() {
+			$array = array();
+			
+			for($i = 0; $i < $this->rows; $i++){
+				
+				$row = array();
+				for($j = 0; $j < $this->cols; $j++){
+					$row[] = null;
+				}
+				
+				$array[] = $row;
+			}
+			
+			foreach($this->gates as $gate){
+				$array[$gate->row][$gate->col] = array("type"=>"gate", "col"=>$gate->col, "row"=>$gate->row);
+			}
+			
+			foreach($this->rooms as $room){
+				$array[$room->getRow()][$room->getCol()] = array("type"=>"room", "col"=>$room->getCol(), "row"=>$room->getRow());
+			}
+			
+			$array[$this->center->row][$this->center->col] = 
+				array("type"=>"center", "col"=>$this->center->col, "row"=>$this->center->row);
+			
+			return $array;
+		}
+		
 		//--------------- get / set ---------------------
 		public function getRooms() {
 			return $this->rooms;
