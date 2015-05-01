@@ -9,13 +9,14 @@ function Main() {
     var combatController = new CombatController();
     var npcController = new NpcController();
     var inventoryController = new InventoryController();
-    
-
     var self = this;
 
     this.InitListener = null;
-
     this.player = null;
+    
+    this.SetSystemController = function(controller) {
+    	this.systemController = controller;
+    }
 
     this.GetPlayer = function() {
         return this.player;

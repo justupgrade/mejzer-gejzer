@@ -11,10 +11,16 @@ SysControlTest.prototype.setUp = function() {
 	controller.ParseSystem(raw['system']);
 }
 
+//it properly sets player position (depends on gate ...)
+SysControlTest.prototype.testUpdateMapPlayerPositionOnEnter = function() {
+	//if this is starting system -> player position should be available in the map
+	//loaded system: player went into left gate -> draw him next to right gate etc...
+	//loaded game : draw player is saved position
+}
+
 //updates map, so:
 //it properly displays number of gates (== number of connections)
-//it properly sets player position (depends on gate ...)
-SysControlTest.prototype.testUpdateMap = function() {
+SysControlTest.prototype.testUpdateMapChangeGatesIntoWalls = function() {
 	//if maze is null -> rand new maze -> update -> save it in profile
 	//if maze is not null -> use it
 	var map = new Map(new MapFactory());

@@ -22,8 +22,12 @@ function loadGame() {
 }
 
 function onGameGeneratedHandler(e) {
-	var new_system_data = JSON.parse(e.target.responseText);
+	var systemController = new SystemController();
+	systemController.ParseSystem(JSON.parse(e.target.responseText));
+	
 	var game = new Main();
+	game.SetSystemController(systemController);
+	
 	game.Run();
 }
 
