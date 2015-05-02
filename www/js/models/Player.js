@@ -25,6 +25,15 @@ function Player() {
 	this.hp = 10;
 	this.currentHP = 10;
 	
+	this.energy = 1;
+	this.currentEnergy = 1;
+	
+	this.stamina = 1;
+	this.ranged_strength = 1;
+	this.offensiveAbility = 5;
+	this.defensiveAbility = 1;
+	this.inteligence = 1;
+	
 	var self = this;
 	
 	this.inventory = new Inventory();//empty inventory...
@@ -125,6 +134,21 @@ function Player() {
     
     this.GetCurrentHpPercent = function() {
     	return this.currentHP/this.hp;
+    }
+    
+    this.GetStats = function() {
+    	return {
+    		"HP":this.hp, 
+    		"STR":this.strength, 
+    		"STA":this.stamina, 
+    		"INT":this.inteligence, 
+    		"SP":this.speed, 
+    		"EP":this.energy, 
+    		'RNS':this.ranged_strength, 
+    		'ARM':this.armor,
+    		'OA':this.offensiveAbility, 
+    		'DA':this.defensiveAbility
+    	};
     }
 }
 

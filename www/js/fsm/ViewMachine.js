@@ -29,7 +29,6 @@ function GameView(machine) {
 	this.Enter = function(root) {
 		self.root = root;
 		container = self.root.GetGameMenu();
-		container.playerGui.SetPlayerRef(root.GetMap().GetPlayer());
 	}
 	
 	this.Update = function(e) {

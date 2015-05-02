@@ -59,7 +59,7 @@ function Main() {
         	//update map...
         	self.systemController.updateGates(null,map);
         	//set references...
-        	gameMenu.playerGui.SetPlayerRef(map.GetPlayer());
+        	gameMenu.UpdatePlayerRef(map.GetPlayer());
         	
         	npcController.load(map.rawQuestData); //quests for loaded map
         	
@@ -83,7 +83,8 @@ function Main() {
     		
     		self.systemController.updateGates(null,map);
     		self.systemController.updatePlayerStartingPosition(map);
-    		gameMenu.playerGui.SetPlayerRef(map.GetPlayer());
+    		
+    		gameMenu.UpdatePlayerRef(map.GetPlayer());
     		
     		npcController.load(map.rawQuestData);
     		inventoryController.SetPlayer(map.GetPlayer());

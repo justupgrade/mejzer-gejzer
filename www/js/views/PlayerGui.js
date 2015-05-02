@@ -14,7 +14,7 @@ function PlayerGui() {
 	this.player = null;
 }
 
-PlayerGui.prototype.SetPlayerRef = function(player) {
+PlayerGui.prototype.SetUpPlayer = function(player) {
 	this.player = player;
 }
 
