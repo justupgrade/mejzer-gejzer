@@ -2,6 +2,8 @@ function GameMenu() {
 	this.MENU_START_Y = 450;
 	
 	this.statsMenuOpened = false;
+	this.questsMenuOpened = false;
+	
 	this.questsSelected = false;
 	this.statsSelected = false;
 	
@@ -17,13 +19,17 @@ function GameMenu() {
 	this.questsImg.src = "img/game_menu/quests.png";
 	this.quests_selected.src = "img/game_menu/quests_selected.png";
 	
-	this.statsMenu = new Image();
-	this.statsMenu.src = "img/stats_menu/statsMenu.png";
+	this.statsMenu = new StatsMenu();
+	this.questsMenu = new QuestsMenu();
 }
 
 GameMenu.prototype.Draw = function(ctx){
 	if(this.statsMenuOpened) {
-		ctx.drawImage(this.statsMenu,0,0);
+		this.statsMenu.Draw(ctx);
+		return;
+	} else if(this.questsMenuOpened){
+		this.questsMenu.Draw(ctx);
+		return;
 	}
 		
 	if(this.statsSelected) ctx.drawImage(this.stats_selected,0,this.MENU_START_Y);
@@ -32,20 +38,6 @@ GameMenu.prototype.Draw = function(ctx){
 	if(this.questsSelected) ctx.drawImage(this.quests_selected,100,this.MENU_START_Y);
 	else ctx.drawImage(this.questsImg,100,this.MENU_START_Y);
 }
-
-GameMenu.prototype.OnMenuClick = function(X,Y){
-	this.deselectAllBtns();
-	this.deselectAllMenus();
-	
-	if(X < 100) {
-		//open stats menu
-		this.statsMenuOpened = true;
-	}
-	else if(X > 100 && X < 200){
-		//open quest log
-	}
-}
-
 
 
 GameMenu.prototype.OnMenuMouseMove = function(X,Y) {
@@ -59,6 +51,7 @@ GameMenu.prototype.OnMenuMouseMove = function(X,Y) {
 
 GameMenu.prototype.deselectAllMenus = function() {
 	this.statsMenuOpened = false;
+	this.questsMenuOpened = false;
 }
 
 GameMenu.prototype.deselectAllBtns = function() {

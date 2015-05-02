@@ -34,6 +34,8 @@
     <script type="text/javascript" src="./js/controllers/ItemFactory.js"></script>
     
      <script type="text/javascript" src="./js/views/GameMenu.js"></script>
+     <script type="text/javascript" src="./js/views/StatsMenu.js"></script>
+     <script type="text/javascript" src="./js/views/QuestsMenu.js"></script>
      
      <script type="text/javascript" src="./js/fsm/ViewMachine.js"></script>
     

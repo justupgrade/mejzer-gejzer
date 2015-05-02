@@ -105,30 +105,10 @@ function Main() {
     
     this.onCanvasClick = function(e) { //clientX, offsetX
     	view.update(e);
-    	
-    	
-    	/*mouseX = e.pageX - this.offsetLeft;
-    	mouseY = e.pageY - this.offsetTop;
-    	
-    	if(mouseY >= gameMenu.MENU_START_Y) {
-    		gameMenu.OnMenuClick(mouseX,mouseY);
-    	} else {
-    		movementController.clickHandler( {"X":e.clientX, "Y":e.clientY} );
-    	}
-    	
-    	
-    	self.Draw();*/
     }
     
-   
-    
     this.onCanvasMouseMove = function(e) {
-    	mouseX = e.pageX - this.offsetLeft;
-    	mouseY = e.pageY - this.offsetTop;
-    	
-    	gameMenu.OnMenuMouseMove(mouseX,mouseY);
-    	
-    	self.Draw();
+    	view.update(e);
     }
     
     //------------------------ MOUSE HANDLERS END ---------------------------
