@@ -16,11 +16,15 @@ function ViewMachine(root) {
 	}
 }
 
+function State() {
+	
+}
+
 function GameView(machine) {
 	var mouseX, mouseY;
 	var self = this;
 	self.machine = machine;
-	var container = null;
+	
 	
 	this.Enter = function(root) {
 		self.root = root;
@@ -35,10 +39,20 @@ function GameView(machine) {
     	
     	if(e.type === "mousemove") {
     		self.MouseMoveHandler();
-    		return;
-    	} 
-    	
-    	//change view...
+    	} else if(e.type === "click"){
+    		self.MouseClickHanlder();
+    	}
+
+    	self.root.Draw();
+	}
+	
+	this.MouseMoveHandler = function() {
+		self.root.GetGameMenu().OnMenuMouseMove(mouseX,mouseY);
+		self.root.Draw();
+	}
+	
+	this.MouseClickHanlder = function() {
+		//change view...
     	if(mouseY >= container.MENU_START_Y) {
     		container.deselectAllBtns();
     		container.deselectAllMenus();
@@ -50,25 +64,20 @@ function GameView(machine) {
     		else if(mouseX > 100 && mouseX < 200){
     			container.questsMenuOpened = true;
     			self.machine.change(new QuestsView(self.machine));
+    		} else if(mouseX > 200 && mouseX < 300){
+    			container.worldMenuOpened = true;
+    			self.machine.change(new WorldView(self.machine));
     		}
     		
     	} else { //update player position
     		self.root.GetMovementController().clickHandler( {"X":mouseX, "Y":mouseY} );
     	}
-    	
-    	self.root.Draw();
-	}
-	
-	this.MouseMoveHandler = function() {
-		self.root.GetGameMenu().OnMenuMouseMove(mouseX,mouseY);
-		self.root.Draw();
 	}
 }
 
 function QuestsView(machine){
 	var mouseX, mouseY;
 	var self = this;
-	var container = null;
 	self.machine = machine;
 	
 	this.Enter = function(root){
@@ -78,6 +87,8 @@ function QuestsView(machine){
 	
 	this.Update = function(e){
 		if(!e) return;
+		
+		//console.log("quest view update test:", self.UpdateTest(e));
 		
 		mouseX = e.pageX - e.target.offsetLeft;
     	mouseY = e.pageY - e.target.offsetTop;
@@ -110,7 +121,6 @@ function QuestsView(machine){
 function StatsView(machine){
 	var mouseX, mouseY;
 	var self = this;
-	var container = null;
 	self.machine = machine;
 	
 	
@@ -121,7 +131,7 @@ function StatsView(machine){
 	
 	this.Update = function(e){
 		if(!e) return;
-		
+		//console.log("stats view update test:", self.UpdateTest(e));
 		mouseX = e.pageX - e.target.offsetLeft;
     	mouseY = e.pageY - e.target.offsetTop;
 		
@@ -149,4 +159,58 @@ function StatsView(machine){
 		}
 	}
 }
+
+function WorldView(machine){
+	var mouseX, mouseY;
+	var self = this;
+	self.machine = machine;
+	
+	
+	this.Enter = function(root){
+		self.root = root;
+		container = self.root.GetGameMenu().worldMenu;
+	}
+	
+	this.Update = function(e){
+		if(!e) return;
+		//console.log("stats view update test:", self.UpdateTest(e));
+		mouseX = e.pageX - e.target.offsetLeft;
+    	mouseY = e.pageY - e.target.offsetTop;
+		
+		if(e.type === "mousemove") {
+			self.MouseMoveHandler();
+		} else if(e.type === "click"){
+			self.MouseClickHanlder();
+		}
+		
+		self.root.Draw();
+	}
+	
+	this.MouseMoveHandler = function() {
+		//highlight close button
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			container.isMouseOverCloseBtn = true;
+		}
+	}
+	
+	this.MouseClickHanlder = function() {
+		//close stats menu; return to main game menu
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			self.root.GetGameMenu().deselectAllMenus();
+			self.machine.change(new GameView(self.machine));
+		}
+	}
+}
+
+GameView.prototype = new State();
+GameView.prototype.constructor = GameView;
+
+QuestsView.prototype = new State();
+QuestsView.prototype.constructor = QuestsView;
+
+StatsView.prototype = new State();
+StatsView.prototype.constructor = StatsView;
+
+WorldView.prototype = new State();
+WorldView.prototype.constructor = WorldView;
 
