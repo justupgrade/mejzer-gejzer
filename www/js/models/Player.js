@@ -122,6 +122,10 @@ function Player() {
     this.GetArmor = function() {
     	return (this.armor + this.armorBonus);
     }
+    
+    this.GetCurrentHpPercent = function() {
+    	return this.currentHP/this.hp;
+    }
 }
 
 Player.prototype = new MapBlock();

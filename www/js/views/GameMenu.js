@@ -30,6 +30,8 @@ function GameMenu() {
 	this.statsMenu = new StatsMenu();
 	this.questsMenu = new QuestsMenu();
 	this.worldMenu = new WorldMenu();
+	
+	this.playerGui = new PlayerGui();
 }
 
 GameMenu.prototype.Draw = function(ctx){
@@ -43,6 +45,8 @@ GameMenu.prototype.Draw = function(ctx){
 		this.worldMenu.Draw(ctx);
 		return;
 	}
+	
+	this.playerGui.Draw(ctx);
 		
 	if(this.statsSelected) ctx.drawImage(this.stats_selected,0,this.MENU_START_Y);
 	else ctx.drawImage(this.statsImg,0,this.MENU_START_Y);
