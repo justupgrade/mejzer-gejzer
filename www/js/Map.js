@@ -92,8 +92,12 @@ function Map(factory) {
                     case 5: cell = new ItemBlock(); break;
                     case 6: 
                     	cell = new Empty();
-                    	this.player = new Player();
-                    	this.player.SetCords( {"COL":col, "ROW":row} );
+                    	if(!this.player) {
+                    		console.log('new player created', this.player);
+                    		this.player = new Player();
+                        	this.player.SetCords( {"COL":col, "ROW":row} );
+                    	}
+                    	
                     	break;
                 }
                 cell.SetCords({"COL":col, "ROW":row});
