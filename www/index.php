@@ -33,6 +33,10 @@
     <script type="text/javascript" src="./js/controllers/QuestFactory.js"></script>
     <script type="text/javascript" src="./js/controllers/ItemFactory.js"></script>
     
+     <script type="text/javascript" src="./js/views/GameMenu.js"></script>
+     
+     <script type="text/javascript" src="./js/fsm/ViewMachine.js"></script>
+    
     <script type="text/javascript" src="./js/Map.js"></script>
     <script type="text/javascript" src="./js/Main.js"></script>
     <script type="text/javascript" src="./js/game.js"></script>

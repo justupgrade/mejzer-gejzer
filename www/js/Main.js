@@ -12,9 +12,13 @@ function Main() {
     combatController.AddInventoryController(inventoryController);
     
     var self = this;
+    
+    var view = new ViewMachine(self);
 
     this.InitListener = null;
     this.player = null;
+    
+    var gameMenu = new GameMenu();
     
     this.SetSystemController = function(controller) {
     	this.systemController = controller;
@@ -35,6 +39,8 @@ function Main() {
         buffer.width = _canvas.width;
         buffer.height = _canvas.height;
         bufferCtx = buffer.getContext('2d');
+        
+        view.change(new GameView(view));
 
         return true;
     }
@@ -43,16 +49,11 @@ function Main() {
         factory.Load();
         map.Load(self.systemController.GetLastLvlID());
         inventoryController.Load();
-
-        //set listener...
-        //update
-        //draw
-        //setInterval
         this.InitListener = setInterval(this.GameReady, 50); //50ms
     }
-
+    
     this.GameReady = function(evt) {
-    	console.log('loading inital...');
+    	//console.log('loading inital...');
         if(map.loaded && inventoryController.loaded) {
         	map.loaded = false;
         	//update map...
@@ -73,7 +74,7 @@ function Main() {
     }
     
     this.GameLoaded = function(evt){
-    	console.log('loading new lvl...');
+    	//console.log('loading new lvl...');
     	if(map.loaded){
     		map.loaded = false;
     		clearInterval(self.InitListener);
@@ -88,7 +89,7 @@ function Main() {
     		
     		
     		self.Draw();
-    		console.log('loaded new lvl');
+    		console.log('id:' + self.systemController.current.id);
     	}
     }
 
@@ -96,13 +97,41 @@ function Main() {
         //add listener to the canvas...
     	console.log('started');
     	_canvas.addEventListener('click', this.onCanvasClick);
+    	_canvas.addEventListener("mousemove", this.onCanvasMouseMove);
     }
     
+    //-------------------- MOUSE HANDLERS SECTION ---------------------------
+    var mouseX, mouseY;
+    
     this.onCanvasClick = function(e) { //clientX, offsetX
-    	movementController.clickHandler( {"X":e.clientX, "Y":e.clientY} );
+    	view.update(e);
+    	
+    	
+    	/*mouseX = e.pageX - this.offsetLeft;
+    	mouseY = e.pageY - this.offsetTop;
+    	
+    	if(mouseY >= gameMenu.MENU_START_Y) {
+    		gameMenu.OnMenuClick(mouseX,mouseY);
+    	} else {
+    		movementController.clickHandler( {"X":e.clientX, "Y":e.clientY} );
+    	}
+    	
+    	
+    	self.Draw();*/
+    }
+    
+   
+    
+    this.onCanvasMouseMove = function(e) {
+    	mouseX = e.pageX - this.offsetLeft;
+    	mouseY = e.pageY - this.offsetTop;
+    	
+    	gameMenu.OnMenuMouseMove(mouseX,mouseY);
     	
     	self.Draw();
     }
+    
+    //------------------------ MOUSE HANDLERS END ---------------------------
     
     this.OpenCombatWindow = function(player,monster){
     	combatController.SetMap(map);
@@ -153,11 +182,22 @@ function Main() {
     this.Draw = function() {
         bufferCtx.clearRect(0,0,_canvas.width,_canvas.height);
         ctx.clearRect(0,0,_canvas.width,_canvas.height);
+        
         map.Draw(bufferCtx);
+        gameMenu.Draw(bufferCtx);
+        
         ctx.drawImage(buffer, 0,0);
     }
 
     this.GetMapArray = function() {
         return map.GetMap();
+    }
+    
+    this.GetGameMenu = function() {
+    	return gameMenu;
+    }
+    
+    this.GetMovementController = function() {
+    	return movementController;
     }
 }
