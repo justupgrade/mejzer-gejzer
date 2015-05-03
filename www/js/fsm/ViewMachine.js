@@ -215,11 +215,17 @@ function InventoryView(machine){
 	var mouseX, mouseY;
 	var self = this;
 	self.machine = machine;
+	var controller;
 	
-	
+	//enter 'spells' (logic):
 	this.Enter = function(root){
 		self.root = root;
 		container = self.root.GetGameMenu().inventoryMenu;
+		controller = self.root.GetInventoryController();
+		//container clear...
+		container.selectedItem = null;
+		container.selectedCol = null;
+		container.selectedRow = null;
 	}
 	
 	this.Update = function(e){
@@ -227,6 +233,8 @@ function InventoryView(machine){
 		//console.log("stats view update test:", self.UpdateTest(e));
 		mouseX = e.pageX - e.target.offsetLeft;
     	mouseY = e.pageY - e.target.offsetTop;
+    	
+    	container.resetSelection();
 		
 		if(e.type === "mousemove") {
 			self.MouseMoveHandler();
@@ -245,10 +253,25 @@ function InventoryView(machine){
 	}
 	
 	this.MouseClickHanlder = function() {
+		//console.log(container.imgInvOffsetX,mouseX,container.GetRightBound());
 		//close stats menu; return to main game menu
 		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
 			self.root.GetGameMenu().deselectAllMenus();
 			self.machine.change(new GameView(self.machine));
+		} else if(mouseX > container.imgInvOffsetX && mouseX < container.GetRightBound()){
+			
+			if(mouseY > container.imgInvOffsetY && mouseY < container.GetBottomBound()) {
+				container.deselect();
+				//select item...
+				var col = Math.floor((mouseX - container.imgInvOffsetX)/container.imgItemSize);
+				var row = Math.floor((mouseY - container.imgInvOffsetY)/container.imgItemSize);
+				container.select(col,row);
+				
+				//some magic:
+				var itemIDX = col + (row*container.maxCols);
+				container.selectedItem = controller.GetItemByIdx(itemIDX);
+				//console.log(itemIDX);
+			}
 		}
 	}
 }

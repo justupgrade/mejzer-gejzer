@@ -42,6 +42,10 @@ Inventory.prototype.getById = function(id) {
 	return null;
 }
 
+Inventory.prototype.getByIdx = function(idx){
+	return this.inventory[idx] ? this.inventory[idx] : null;
+}
+
 Inventory.prototype.changeWeapon = function(item) {
 	if(item === this.weapon) return;
 	

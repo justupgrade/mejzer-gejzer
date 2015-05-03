@@ -150,6 +150,10 @@ function Player() {
     		'DA':this.defensiveAbility
     	};
     }
+    
+    this.GetInventorySize = function() {
+    	return this.inventory.inventory.length;
+    }
 }
 
 Player.prototype = new MapBlock();

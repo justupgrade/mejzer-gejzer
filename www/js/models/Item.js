@@ -1,23 +1,35 @@
 function Item(options) {
 	this.wearable = true;
 	this.type = null;
+	this.name = null;
+	
+	this.GetType = function() {
+		return this.type;
+	}
+	
+	this.GetName = function() {
+		return this.name;
+	}
 }
 
 function Weapon(options) {
 	this.type = "weapon";
 	this.damage = options.damage;
 	this.itemID = options.id;
+	this.name = options.item_name;
 }
 
 function Armor(options) {
 	this.type = "armor";
 	this.itemID = options.id;
 	this.protection = options.protection;
+	this.name = options.item_name;
 }
 
 function Book(options) {
 	this.wearable = false;
 	this.type = "special";
+	this.name = options.item_name;
 }
 
 function QuestItem(options){

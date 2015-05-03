@@ -64,6 +64,10 @@ InventoryController.prototype.FindItemById = function(id) {
 	return this.inventory.getById(id);
 }
 
+InventoryController.prototype.GetItemByIdx = function(idx){
+	return this.inventory.getByIdx(idx);
+}
+
 InventoryController.prototype.changeWeapon = function(item) {
 	if(!item.wearable) return;
 	

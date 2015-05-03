@@ -187,4 +187,8 @@ function Main() {
     this.GetMovementController = function() {
     	return movementController;
     }
+    
+    this.GetInventoryController = function() {
+    	return inventoryController;
+    }
 }

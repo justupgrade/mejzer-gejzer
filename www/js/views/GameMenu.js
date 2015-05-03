@@ -58,6 +58,7 @@ function GameMenu() {
 GameMenu.prototype.UpdatePlayerRef = function(player) {
 	this.statsMenu.SetUpPlayer(player);
 	this.playerGui.SetUpPlayer(player);
+	this.inventoryMenu.SetUpPlayer(player);
 }
 
 GameMenu.prototype.Draw = function(ctx){
