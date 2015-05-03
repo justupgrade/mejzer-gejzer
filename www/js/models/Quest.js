@@ -12,6 +12,7 @@
  */
 
 function Quest() {
+	this.completed = false;
 	this.type = null;
 	this.questID = null;
 	this.rewardGold = 0;
@@ -42,6 +43,14 @@ function Quest() {
 	this.IsCompleted = function(player) {
 		throw new Error("ABSTRACT METHOD!!!");
 	}
+	
+	this.GetCompleted = function(){
+		return this.completed;
+	}
+	
+	this.MarkAsCompleted = function() {
+		this.completed = true;
+	}
 }
 
 function KillQuest() {
@@ -66,6 +75,10 @@ function KillQuest() {
 	this.IsCompleted = function(player) {
 		return player.WasEnemyKilled(this.monsterID);
 	}
+	
+	this.GetObjective = function() {
+		return "Kill Monster_Name!";
+	}
 }
 
 function FindItemQuest() {
@@ -85,6 +98,10 @@ function FindItemQuest() {
 	this.IsCompleted = function(player) {
 		//has in inventory?
 		return player.HasItemInInventory(this.item_id);
+	}
+	
+	this.GetObjective = function() {
+		return "Find " + this.item_name;
 	}
 }
 

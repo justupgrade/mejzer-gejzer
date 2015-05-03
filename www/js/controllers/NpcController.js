@@ -11,6 +11,11 @@ function NpcController() {
 	this.questController = new QuestController();
 }
 
+NpcController.prototype.SetUpPlayer = function(player) {
+	this.player = player;
+	this.questController.SetUpPlayer(this.player);
+}
+
 NpcController.prototype.load = function(quests) {
 	if(!quests) this.questController.load();
 	else this.questController.parse(quests);
@@ -20,6 +25,8 @@ NpcController.prototype.init = function(player,npc, view){
 	this.view = view;
 	this.npc = npc;
 	this.player = player;
+	
+	this.questController.SetUpPlayer(this.player);
 }
 
 NpcController.prototype.SetMap = function(map){

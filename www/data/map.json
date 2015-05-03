@@ -34,7 +34,7 @@
 		            ],
 		            [
 		             {
-		            	 "questID": 2, "item_name": "stick lvl 2",
+		            	 "questID": 2, "item_name": "Old Stick",
 		            	 "type": "find_item", "item_id": 10,
 		            	 "reward": {"exp": 50, "gold": 200 }
 		             }

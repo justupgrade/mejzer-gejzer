@@ -10,6 +10,6 @@
 		{ "id": 7, "item_name": "full plate", "type": "armor", "protection": 2 },
 		{ "id": 8, "item_name": "full plate", "type": "armor", "protection": 3 },
 		{ "id": 9, "item_name": "full plate", "type": "armor", "protection": 4 },
-		{ "id": 10, "item_name": "old stick", "type": "quest"}
+		{ "id": 10, "item_name": "Old Stick", "type": "quest"}
 	]
 }

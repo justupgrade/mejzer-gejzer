@@ -92,6 +92,7 @@ function Player() {
     }
     
     this.CompleteQuest = function(quest){
+    	quest.MarkAsCompleted();
     	this.gold += quest.GetRewardGold();
     	this.UpdateExp(quest.GetRewardExp());
     	

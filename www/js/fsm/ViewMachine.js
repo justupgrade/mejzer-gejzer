@@ -88,10 +88,14 @@ function QuestsView(machine){
 	var mouseX, mouseY;
 	var self = this;
 	self.machine = machine;
+	var controller;
 	
 	this.Enter = function(root){
 		self.root = root;
 		container = self.root.GetGameMenu().questsMenu;
+		controller = self.root.GetQuestController();
+		container.clearMenu();
+		container.quests = controller.GetAllQuests();
 	}
 	
 	this.Update = function(e){
@@ -123,6 +127,13 @@ function QuestsView(machine){
 		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
 			self.root.GetGameMenu().deselectAllMenus();
 			self.machine.change(new GameView(self.machine));
+		} else if(mouseX > container.questLabelOffsetX && 
+				mouseX < container.questLabelOffsetX + 300) {
+			if(mouseY > container.questLabelOffsetY && mouseY < container.questLabelOffsetY + 350) {
+				var questIdx = Math.floor((mouseY - container.questLabelOffsetY)/container.questLabelHeight);
+				container.selectQuest(questIdx);
+				//console.log(questIdx);
+			}
 		}
 	}
 }

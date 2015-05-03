@@ -62,6 +62,7 @@ function Main() {
         	gameMenu.UpdatePlayerRef(map.GetPlayer());
         	
         	npcController.load(map.rawQuestData); //quests for loaded map
+        	npcController.SetUpPlayer(map.GetPlayer());
         	
         	inventoryController.SetPlayer(map.GetPlayer());
         	
@@ -87,6 +88,7 @@ function Main() {
     		gameMenu.UpdatePlayerRef(map.GetPlayer());
     		
     		npcController.load(map.rawQuestData);
+    		npcController.SetUpPlayer(map.GetPlayer());
     		inventoryController.SetPlayer(map.GetPlayer());
     		movementController.SetMap(map);
     		
@@ -190,5 +192,9 @@ function Main() {
     
     this.GetInventoryController = function() {
     	return inventoryController;
+    }
+    
+    this.GetQuestController = function() {
+    	return npcController.questController;
     }
 }
