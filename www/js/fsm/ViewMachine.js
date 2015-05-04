@@ -261,7 +261,7 @@ function PreCombatView(machine){
 		//highlight close button
 		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
 			container.isMouseOverCloseBtn = true;
-		} else if(mouse)
+		}
 	}
 	
 	this.MouseClickHanlder = function() {
