@@ -227,6 +227,52 @@ function NpcView(machine){
 	}
 }
 
+function PreCombatView(machine){
+	var mouseX, mouseY;
+	var self = this;
+	self.machine = machine;
+	
+	
+	this.Enter = function(root){
+		self.root = root;
+		container = self.root.GetGameMenu().preCombatMenu;
+	}
+	
+	this.Update = function(e){
+		self.root.GetGameMenu().preCombatMenuOpened = true;
+		if(!e) {
+			self.root.Draw();
+			return;
+		}
+		//console.log("stats view update test:", self.UpdateTest(e));
+		mouseX = e.pageX - e.target.offsetLeft;
+    	mouseY = e.pageY - e.target.offsetTop;
+		
+		if(e.type === "mousemove") {
+			self.MouseMoveHandler();
+		} else if(e.type === "click"){
+			self.MouseClickHanlder();
+		}
+		
+		self.root.Draw();
+	}
+	
+	this.MouseMoveHandler = function() {
+		//highlight close button
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			container.isMouseOverCloseBtn = true;
+		} else if(mouse)
+	}
+	
+	this.MouseClickHanlder = function() {
+		//close stats menu; return to main game menu
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			self.root.GetGameMenu().deselectAllMenus();
+			self.machine.change(new GameView(self.machine));
+		}
+	}
+}
+
 function StatsView(machine){
 	var mouseX, mouseY;
 	var self = this;
@@ -310,6 +356,8 @@ function WorldView(machine){
 		}
 	}
 }
+
+
 
 function InventoryView(machine){
 	var mouseX, mouseY;

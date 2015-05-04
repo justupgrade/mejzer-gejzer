@@ -18,6 +18,7 @@ function GameMenu() {
 	this.worldMenuOpened = false;
 	this.inventoryMenuOpened = false;
 	this.npcMenuOpened = false;
+	this.preCombatMenuOpened = false;
 	
 	this.questsSelected = false;
 	this.statsSelected = false;
@@ -55,7 +56,7 @@ function GameMenu() {
 	this.worldMenu = new WorldMenu();
 	this.inventoryMenu = new InventoryMenu();
 	this.npcMenu = new NpcMenu();
-	
+	this.preCombatMenu = new PreCombatMenu();
 	this.playerGui = new PlayerGui();
 }
 
@@ -105,6 +106,7 @@ GameMenu.prototype.deselectAllMenus = function() {
 	this.worldMenuOpened = false;
 	this.inventoryMenuOpened = false;
 	this.npcMenuOpened = false;
+	this.preCombatMenuOpened = false;
 }
 
 GameMenu.prototype.deselectAllBtns = function() {
