@@ -4,6 +4,7 @@
 
 function Player() {
 	this.gold = 0;
+	this.lvl = 1;
 	this.type = "mele";
 	
 	this.quests = [];
@@ -29,6 +30,8 @@ function Player() {
 	this.energy = 1;
 	this.currentEnergy = 1;
 	
+	this.xp = 0;
+	
 	this.stamina = 1;
 	this.ranged_strength = 1;
 	this.offensiveAbility = 5;
@@ -52,6 +55,7 @@ function Player() {
     
     this.Attack = function(enemy) {
     	enemy.getHit(self.strength);
+    	this.xp++;
     }
     
     this.getHit = function(dmg) {
@@ -60,10 +64,32 @@ function Player() {
     		this.currentHP += this.armor;
     		this.armor = 0;
     	}
+    	this.xp++;
     }
     
     this.isAlive = function() {
     	return this.currentHP > 0;
+    }
+    
+    this.LevelUp = function() {
+    	console.log(this.xp, 100 * this.lvl);
+    	
+    	if(this.xp > 100 * this.lvl) {
+    		this.hp += 5;
+    		this.strength += 2;
+    		this.stamina += 1;
+    		this.inteligence += 1;
+    		this.speed += 1;
+    		this.energy += 1;
+    		this.ranged_strength += 1;
+    		this.armor += 5;
+    		this.offensiveAbility += 2;
+    		this.defensiveAbility += 1;
+    		this.xp -= 100 * this.lvl;
+    		this.lvl += 1;
+    	}
+    	
+    	
     }
     
     this.LookIfQuestExists = function(quest){
@@ -114,7 +140,8 @@ function Player() {
     }
     
     this.UpdateExp = function(exp) {
-    	
+    	this.xp += exp;
+    	this.LevelUp();
     }
     
     //killHistory[monster_type][monster_id];

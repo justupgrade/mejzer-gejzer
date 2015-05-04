@@ -35,22 +35,13 @@ CombatController.prototype.solveTurn = function() {
 	//who attack first? -> speed
 	if(this.player.speed >= this.enemy.speed) {
 		if(this.PlayerAttacksEnemy()) {
-			if(!this.EnemyAttacksPlayer()) {
-				//player died
-			}
-		} else {
-			//this.RemoveEnemy();
+			this.EnemyAttacksPlayer();
 		}
 		
 	} else {
 		if(this.EnemyAttacksPlayer()) {
-			if(!this.PlayerAttacksEnemy()) {
-				//this.RemoveEnemy();
-			}
-		} else {
-			//player died
+			this.PlayerAttacksEnemy();
 		}
-		
 	}
 }
 

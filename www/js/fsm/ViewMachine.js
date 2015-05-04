@@ -480,6 +480,7 @@ function PreCombatView(machine){
 			self.machine.change(new GameView(self.machine));
 		} else if(mouseX > container.combatBtnX && mouseX < 110 && mouseY > 10 && mouseY < 60){
 			controller.solveCombat();
+			controller.GetPlayer().LevelUp(); //try to lvl up after combat
 			self.root.GetGameMenu().deselectAllMenus();
 			self.machine.change(new GameView(self.machine));
 		}

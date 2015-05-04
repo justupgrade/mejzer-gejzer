@@ -34,7 +34,7 @@ NpcController.prototype.SetMap = function(map){
 }
 
 NpcController.prototype.Start = function(){
-	this.AddQuest(0);
+	//this.AddQuest(0);
 }
 
 /*
