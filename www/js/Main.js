@@ -142,6 +142,7 @@ function Main() {
     	//add item to inventory...
     	var newItem = inventoryController.GetNewItemById(item.id);
     	inventoryController.addItem(newItem);
+    	inventoryController.lastAddition(newItem);
     	map.RemoveItem(item);
     	
     	view.change(new ItemPickUpView(view));
@@ -211,5 +212,9 @@ function Main() {
     
     this.GetCombatController = function() {
     	return combatController;
+    }
+    
+    this.GetInventoryController = function() {
+    	return inventoryController;
     }
 }

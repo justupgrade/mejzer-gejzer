@@ -17,6 +17,14 @@ function Weapon(options) {
 	this.damage = options.damage;
 	this.itemID = options.id;
 	this.name = options.item_name;
+	
+	this.GetDetailsDescriptor = function() {
+		return {
+			"type": this.type,
+			"name": this.name,
+			"damage": this.damage,
+		}
+	}
 }
 
 function Armor(options) {
@@ -24,12 +32,27 @@ function Armor(options) {
 	this.itemID = options.id;
 	this.protection = options.protection;
 	this.name = options.item_name;
+	
+	this.GetDetailsDescriptor = function() {
+		return {
+			"type": this.type,
+			"name": this.name,
+			"protection": this.protection,
+		}
+	}
 }
 
 function Book(options) {
 	this.wearable = false;
 	this.type = "special";
 	this.name = options.item_name;
+	
+	this.GetDetailsDescriptor = function() {
+		return {
+			"type": this.type,
+			"name": this.name,
+		}
+	}
 }
 
 function QuestItem(options){
@@ -37,6 +60,13 @@ function QuestItem(options){
 	this.type = "quest";
 	this.itemID = options.id;
 	this.name = options.item_name;
+	
+	this.GetDetailsDescriptor = function() {
+		return {
+			"type": this.type,
+			"name": this.name,
+		}
+	}
 }
 
 Weapon.prototype = new Item();

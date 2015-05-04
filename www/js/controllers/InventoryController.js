@@ -7,6 +7,7 @@ function InventoryController() {
 	this.inventory = null;
 	this.items = null;
 	this.loaded = false;
+	this.lastAdded = null;
 }
 
 InventoryController.prototype.SetPlayer = function(player){
@@ -85,4 +86,12 @@ InventoryController.prototype.changeArmor = function(item) {
 InventoryController.prototype.wearItem = function(item) {
 	if(item.type == "weapon") this.changeWeapon(item);
 	else if(item.type == "armor") this.changeArmor(item);
+}
+
+InventoryController.prototype.lastAddition = function(item) {
+	this.lastAdded = item;
+}
+
+InventoryController.prototype.GetLastAdditions = function() {
+	return [this.lastAdded];
 }

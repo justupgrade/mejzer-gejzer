@@ -386,6 +386,8 @@ function ItemPickUpView(machine){
 	this.Enter = function(root){
 		self.root = root;
 		container = self.root.GetGameMenu().itemPickMenu;
+		controller = self.root.GetInventoryController();
+		container.items = controller.GetLastAdditions();
 	}
 	
 	this.Update = function(e){
@@ -419,6 +421,12 @@ function ItemPickUpView(machine){
 		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
 			self.root.GetGameMenu().deselectAllMenus();
 			self.machine.change(new GameView(self.machine));
+		} else if(mouseX > container.labelOffsetX && 
+				mouseX < container.labelOffsetX + 300) {
+			if(mouseY > container.labelOffsetY && mouseY < container.labelOffsetY + 350) {
+				var itemIDX = Math.floor((mouseY - container.labelOffsetY)/container.labelHeight);
+				container.selectItem(itemIDX);
+			}
 		}
 	}
 }
