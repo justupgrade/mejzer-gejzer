@@ -71,8 +71,12 @@ function Player() {
     	return this.currentHP > 0;
     }
     
+    this.GetProgressPercent = function() {
+    	return this.xp / (100*this.lvl);
+    }
+    
     this.LevelUp = function() {
-    	console.log(this.xp, 100 * this.lvl);
+    	//console.log(this.xp, 100 * this.lvl);
     	
     	if(this.xp > 100 * this.lvl) {
     		this.hp += 5;

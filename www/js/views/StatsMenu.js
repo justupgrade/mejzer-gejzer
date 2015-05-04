@@ -7,11 +7,13 @@ function StatsMenu() {
 	this.closeBtn = new Image();
 	this.closeBtnOver = new Image();
 	this.statsContImg = new Image();
+	this.progressBar = new Image();
 	
 	this.background.src = "img/stats_menu/statsMenu.png";
 	this.closeBtn.src = "img/buttons/close_btn.png";
 	this.closeBtnOver.src = "img/buttons/close_btn_over.png";
 	this.statsContImg.src = "img/stats_menu/player_stats_cont.png";
+	this.progressBar.src = "img/player_menu/energy_bar.png";
 	
 	this.attrLabels = ["HP", "STR", "STA", "INT", "SP", "EP", 'RNS', 'ARM', 'OA', 'DA'];
 	this.attrValues = null;
@@ -57,6 +59,10 @@ StatsMenu.prototype.Draw = function(ctx) {
 		ctx.fillText(value, 250+idx*50 +(50-tWidth)/2, 70+25+15);
 	}
 	
+	
+	var progress = this.player.GetProgressPercent();
+	
+	ctx.drawImage(this.progressBar, 50, 110, 200*progress, 10);
 	
 	this.resetSelection();
 }
