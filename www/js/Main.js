@@ -121,7 +121,10 @@ function Main() {
     this.OpenCombatWindow = function(player,monster){
     	combatController.SetMap(map);
     	combatController.init(player,monster);
-    	combatController.solveCombat();
+    	
+    	view.change(new PreCombatView(view));
+    	view.update(null);
+    	//combatController.solveCombat();
     }
     movementController.SetCombatCallback(this.OpenCombatWindow);
     
@@ -203,5 +206,9 @@ function Main() {
     
     this.GetNpcController = function() {
     	return npcController;
+    }
+    
+    this.GetCombatController = function() {
+    	return combatController;
     }
 }

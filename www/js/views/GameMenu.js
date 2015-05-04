@@ -82,6 +82,9 @@ GameMenu.prototype.Draw = function(ctx){
 	} else if(this.npcMenuOpened){
 		this.npcMenu.Draw(ctx);
 		return;
+	} else if(this.preCombatMenuOpened){
+		this.preCombatMenu.Draw(ctx);
+		return;
 	}
 	
 	this.playerGui.Draw(ctx);

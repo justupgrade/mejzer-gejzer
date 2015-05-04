@@ -231,11 +231,13 @@ function PreCombatView(machine){
 	var mouseX, mouseY;
 	var self = this;
 	self.machine = machine;
+	var controller;
 	
 	
 	this.Enter = function(root){
 		self.root = root;
 		container = self.root.GetGameMenu().preCombatMenu;
+		controller = self.root.GetCombatController();
 	}
 	
 	this.Update = function(e){
@@ -261,12 +263,18 @@ function PreCombatView(machine){
 		//highlight close button
 		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
 			container.isMouseOverCloseBtn = true;
+		} else if(mouseX > container.combatBtnX && mouseX < 110 && mouseY > 10 && mouseY < 60){
+			container.isMouseOverCombatBtn = true;
 		}
 	}
 	
 	this.MouseClickHanlder = function() {
 		//close stats menu; return to main game menu
 		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			self.root.GetGameMenu().deselectAllMenus();
+			self.machine.change(new GameView(self.machine));
+		} else if(mouseX > container.combatBtnX && mouseX < 110 && mouseY > 10 && mouseY < 60){
+			controller.solveCombat();
 			self.root.GetGameMenu().deselectAllMenus();
 			self.machine.change(new GameView(self.machine));
 		}
