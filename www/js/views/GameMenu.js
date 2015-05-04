@@ -17,6 +17,7 @@ function GameMenu() {
 	this.questsMenuOpened = false;
 	this.worldMenuOpened = false;
 	this.inventoryMenuOpened = false;
+	this.npcMenuOpened = false;
 	
 	this.questsSelected = false;
 	this.statsSelected = false;
@@ -49,8 +50,11 @@ function GameMenu() {
 	
 	this.statsMenu = new StatsMenu();
 	this.questsMenu = new QuestsMenu();
+	this.questsMenu.Load();
+	
 	this.worldMenu = new WorldMenu();
 	this.inventoryMenu = new InventoryMenu();
+	this.npcMenu = new NpcMenu();
 	
 	this.playerGui = new PlayerGui();
 }
@@ -73,6 +77,9 @@ GameMenu.prototype.Draw = function(ctx){
 		return;
 	} else if(this.inventoryMenuOpened) {
 		this.inventoryMenu.Draw(ctx);
+		return;
+	} else if(this.npcMenuOpened){
+		this.npcMenu.Draw(ctx);
 		return;
 	}
 	
@@ -97,6 +104,7 @@ GameMenu.prototype.deselectAllMenus = function() {
 	this.questsMenuOpened = false;
 	this.worldMenuOpened = false;
 	this.inventoryMenuOpened = false;
+	this.npcMenuOpened = false;
 }
 
 GameMenu.prototype.deselectAllBtns = function() {

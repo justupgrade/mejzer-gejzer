@@ -128,7 +128,10 @@ function Main() {
     this.OpenNpcWindow = function(player, npc){
     	npcController.SetMap(map);
     	npcController.init(player,npc, this);
-    	npcController.Start();
+    	
+    	//npcController.Start();
+    	view.change(new NpcView(view));
+    	view.update(null);
     }
     movementController.SetNpcCallback(this.OpenNpcWindow);
     
@@ -196,5 +199,9 @@ function Main() {
     
     this.GetQuestController = function() {
     	return npcController.questController;
+    }
+    
+    this.GetNpcController = function() {
+    	return npcController;
     }
 }

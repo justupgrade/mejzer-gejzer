@@ -17,18 +17,6 @@ function QuestsMenu() {
 	this.objectiveBack = new Image();
 	this.rewardBack = new Image();
 	
-	this.background.src = "img/quests_menu/questsMenu.png";
-	this.closeBtn.src = "img/buttons/close_btn.png";
-	this.closeBtnOver.src = "img/buttons/close_btn_over.png";
-	this.questLabel.src = "img/quests_menu/quest_label.png";
-	this.questLabelSelected.src = "img/quests_menu/quest_label_selected.png";
-	this.questCompleted.src = "img/quests_menu/quest_completed.png";
-	this.questCompletedSelected.src = "img/quests_menu/quest_completed_selected.png";
-	this.objectiveImg.src = "img/quests_menu/objectives_img.png";
-	this.rewardImg.src = "img/quests_menu/reward_img.png";
-	this.objectiveBack.src = "img/quests_menu/objective_back.png";
-	this.rewardBack.src = "img/quests_menu/reward_back.png";
-	
 	this.quests = null;
 	this.selectedQuest = null;
 	this.selectedQuestID = null;
@@ -40,6 +28,24 @@ function QuestsMenu() {
 	
 	this.questDetailsOffsetX = 450;
 	
+}
+
+QuestsMenu.prototype.LoadQuestAssets = function() {
+	this.questLabel.src = "img/quests_menu/quest_label.png";
+	this.questLabelSelected.src = "img/quests_menu/quest_label_selected.png";
+	this.questCompleted.src = "img/quests_menu/quest_completed.png";
+	this.questCompletedSelected.src = "img/quests_menu/quest_completed_selected.png";
+	this.objectiveImg.src = "img/quests_menu/objectives_img.png";
+	this.rewardImg.src = "img/quests_menu/reward_img.png";
+	this.objectiveBack.src = "img/quests_menu/objective_back.png";
+	this.rewardBack.src = "img/quests_menu/reward_back.png";
+}
+
+QuestsMenu.prototype.Load = function() {
+	this.background.src = "img/quests_menu/questsMenu.png";
+	this.closeBtn.src = "img/buttons/close_btn.png";
+	this.closeBtnOver.src = "img/buttons/close_btn_over.png";
+	this.LoadQuestAssets();
 }
 
 QuestsMenu.prototype.Draw = function(ctx) {

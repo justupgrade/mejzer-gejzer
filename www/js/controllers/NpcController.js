@@ -65,6 +65,27 @@ NpcController.prototype.AddQuest = function(questIDX) {
 	return quest;
 }
 
+NpcController.prototype.GetAllNpcQuests = function() {
+	var npcQuests = this.questController.GetNpcQuests(this.npc.GetID()-1);
+	
+	//update quest values (if quest completed -> set completed, if quest 'activated' -> set activated
+	var q;
+	
+	for(var idx in npcQuests) {
+		q = npcQuests[idx];
+		//console.log(q);
+		if(this.player.LookIfQuestExists(q)) {
+			q.activated = true;
+		}
+		
+		if(this.player.QuestCompleted(q)){
+			q.completed = true;
+		}
+	}
+	
+	return npcQuests;
+}
+
 
 
 

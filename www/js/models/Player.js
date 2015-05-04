@@ -65,6 +65,16 @@ function Player() {
     	return this.currentHP > 0;
     }
     
+    this.LookIfQuestExists = function(quest){
+    	for(var idx in this.quests){
+    		if(this.quests[idx].GetID() == quest.GetID()) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
     this.QuestExists = function(quest){
     	for(var idx in this.quests){
     		if(this.quests[idx].GetID() == quest.GetID()) {

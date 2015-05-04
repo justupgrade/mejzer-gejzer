@@ -138,6 +138,95 @@ function QuestsView(machine){
 	}
 }
 
+function NpcView(machine){
+	var mouseX, mouseY;
+	var self = this;
+	self.machine = machine;
+	var controller = null;
+	
+	this.Enter = function(root){
+		self.root = root;
+		container = self.root.GetGameMenu().npcMenu;
+		controller = self.root.GetNpcController();
+		container.deselectBtns();
+	}
+	
+	this.Update = function(e){
+		self.root.GetGameMenu().npcMenuOpened = true;
+		if(!e) {
+			self.root.Draw();
+			return;
+		}
+		//console.log("stats view update test:", self.UpdateTest(e));
+		mouseX = e.pageX - e.target.offsetLeft;
+    	mouseY = e.pageY - e.target.offsetTop;
+		
+		if(e.type === "mousemove") {
+			self.MouseMoveHandler();
+		} else if(e.type === "click"){
+			self.MouseClickHanlder();
+			self.root.Draw();
+		}
+		
+		
+	}
+	
+	this.MouseMoveHandler = function() {
+		//console.log(container);
+		//highlight close button
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			container.isMouseOverCloseBtn = true;
+			self.root.Draw();
+		} else {
+			return;
+		}
+	}
+	
+	this.MouseClickHanlder = function() {
+		var cont = container.questMenu;
+		//console.log(container.questMenu);
+		//close stats menu; return to main game menu
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			self.root.GetGameMenu().deselectAllMenus();
+			self.machine.change(new GameView(self.machine));
+		} else if(mouseY > container.buttonOffY && mouseY < 60){
+			if(mouseX > container.buttonOffX && mouseX < container.GetActionRightBound()){
+				var actionIDX = Math.floor((mouseX - container.buttonOffX)/container.buttonSpacing);
+				container.SelectAction(actionIDX);
+				
+				container.questMenu.quests = controller.GetAllNpcQuests();
+			}
+		}
+		//option clicked (quest1, quest2, etc)
+		else if(mouseX > cont.questLabelOffsetX && 
+				mouseX < cont.questLabelOffsetX + 300) {
+			if(mouseY > cont.questLabelOffsetY && mouseY < cont.questLabelOffsetY + 350) {
+				var questIdx = Math.floor((mouseY - cont.questLabelOffsetY)/cont.questLabelHeight);
+				cont.selectQuest(questIdx);
+				self.root.Draw();
+				if(container.QuestActive() && container.QuestCompleted() !== true){
+					controller.AddQuest(questIdx);
+					container.questMenu.quests = controller.GetAllNpcQuests();
+					self.root.Draw();
+				}
+				
+			}
+		}
+		//accept menu clicked?
+		else if(mouseX > container.GetAccpetQuestStartX() && mouseX < container.GetAccpetQuestStartX() + 100) {
+			if(mouseY > container.GetAcceptQuestStartY() && mouseY < container.GetAcceptQuestStartY() + 50) {
+				//accept btn clicked -> addQuest (if quest menu active)
+				if(container.QuestActive() === false && container.QuestCompleted() === false) {
+					controller.AddQuest(container.GetSelectedQuestIDX());
+					
+					container.questMenu.quests = controller.GetAllNpcQuests();
+					self.Update(null);
+				}
+			}
+		}
+	}
+}
+
 function StatsView(machine){
 	var mouseX, mouseY;
 	var self = this;

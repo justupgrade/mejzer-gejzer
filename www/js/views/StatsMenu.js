@@ -14,7 +14,7 @@ function StatsMenu() {
 	this.statsContImg.src = "img/stats_menu/player_stats_cont.png";
 	
 	this.attrLabels = ["HP", "STR", "STA", "INT", "SP", "EP", 'RNS', 'ARM', 'OA', 'DA'];
-	this.attrValues = [5,5,2,1,3,5,1,5,5,1];
+	this.attrValues = null;
 	
 	this.player = null;
 }

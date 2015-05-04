@@ -15,6 +15,20 @@ QuestController.prototype.parse = function(data){
 	this.quests = data;
 }
 
+QuestController.prototype.GetNpcQuests = function(npcID){
+	var factory = new QuestFactory();
+	var array = [];
+	var quest;
+	
+	for(var idx in this.quests[npcID]){
+		quest = factory.create(this.quests[npcID][idx]);
+		quest.SetIDX(idx);
+		array.push(quest);
+	}
+	
+	return array;
+}
+
 QuestController.prototype.addQuest = function(player,npcID,questIDX) {
 	var factory = new QuestFactory();
 	var quest = factory.create(this.GetRawQuest(npcID,questIDX));
@@ -39,6 +53,7 @@ QuestController.prototype.GetRawQuest = function(npcID, questIDX){
 	return this.quests[npcID-1][questIDX];
 }
 
+//Get all player quests...
 QuestController.prototype.GetAllQuests = function() {
 	var idx;
 	var allQuests = [];

@@ -12,6 +12,7 @@
  */
 
 function Quest() {
+	this.idx = null;
 	this.completed = false;
 	this.type = null;
 	this.questID = null;
@@ -21,6 +22,14 @@ function Quest() {
 	
 	this.Init = function(data) {
 		//to override!!
+	}
+	
+	this.SetIDX = function(idx){
+		this.idx = idx;
+	}
+	
+	this.GetIDX = function() {
+		return this.idx;
 	}
 	
 	this.GetID = function() {
