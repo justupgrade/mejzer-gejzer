@@ -29,6 +29,28 @@ function MeleEnemy() {
 	this.armor = 5;
 	this.hp = 5;
 	this.currentHP = 5;
+	this.inteligence = 1;
+	this.energy = 1;
+	this.ranged_strength = 1;
+	this.offensiveAbility = 3;
+	this.defensiveAbility = 1;
+	this.stamina = 2;
+}
+
+MeleEnemy.prototype.GetStats = function() {
+	return {
+		"TYPE":this.type,
+		"HP":this.hp, 
+		"STR":this.strength, 
+		"STA":this.stamina, 
+		"INT":this.inteligence, 
+		"SP":this.speed, 
+		"EP":this.energy, 
+		'RNS':this.ranged_strength, 
+		'ARM':this.armor,
+		'OA':this.offensiveAbility, 
+		'DA':this.defensiveAbility
+	};
 }
 
 MeleEnemy.prototype.Attack = function(enemy) {

@@ -4,6 +4,7 @@
 
 function Player() {
 	this.gold = 0;
+	this.type = "mele";
 	
 	this.quests = [];
 	this.questsCompleted = [];
@@ -149,7 +150,8 @@ function Player() {
     
     this.GetStats = function() {
     	return {
-    		"HP":this.hp, 
+    		"TYPE": this.type,
+    		"HP": this.hp, 
     		"STR":this.strength, 
     		"STA":this.stamina, 
     		"INT":this.inteligence, 

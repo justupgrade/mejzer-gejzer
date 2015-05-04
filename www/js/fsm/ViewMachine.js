@@ -434,6 +434,7 @@ function PreCombatView(machine){
 		self.root = root;
 		container = self.root.GetGameMenu().preCombatMenu;
 		controller = self.root.GetCombatController();
+		container.SetUpMonster(controller.GetEnemy(), controller.GetPlayer());
 	}
 	
 	this.Update = function(e){
