@@ -54,8 +54,8 @@ function Player() {
     }
     
     this.Attack = function(enemy) {
-    	enemy.getHit(self.strength);
-    	this.xp++;
+    	enemy.getHit(self.GetAttack());
+    	this.xp += self.GetAttack();
     }
     
     this.getHit = function(dmg) {
@@ -64,7 +64,7 @@ function Player() {
     		this.currentHP += this.armor;
     		this.armor = 0;
     	}
-    	this.xp++;
+    	this.xp += dmg;
     }
     
     this.isAlive = function() {

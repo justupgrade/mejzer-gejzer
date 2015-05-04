@@ -11,14 +11,14 @@
 		         [2,2,2,2,2,2,2,2,2,2,2,2,1,2]
 		     ],
 		 "monsters": [
-		 		{ "id": 1, "type": "mele", "col":11, "row":3 },
-		 		{ "id": 2, "type": "mele", "col":9, "row":2 },
-		 		{ "id": 3, "type": "mele", "col":5, "row":1 },
-		 		{ "id": 4, "type": "mele", "col":1, "row":2 },
-		 		{ "id": 5, "type": "mele", "col":5, "row":5 },
-		 		{ "id": 6, "type": "mele", "col":7, "row":3 },
-		 		{ "id": 7, "type": "mele", "col":7, "row":7 },
-		 		{ "id": 8, "type": "mele", "col":2, "row":7 }
+		 		{ "id": 1, "lvl":1, "type": "mele", "col":11, "row":3 },
+		 		{ "id": 2, "lvl":1, "type": "mele", "col":9, "row":2 },
+		 		{ "id": 3, "lvl":1, "type": "mele", "col":5, "row":1 },
+		 		{ "id": 4, "lvl":1, "type": "mele", "col":1, "row":2 },
+		 		{ "id": 5, "lvl":1, "type": "mele", "col":5, "row":5 },
+		 		{ "id": 6, "lvl":1, "type": "mele", "col":7, "row":3 },
+		 		{ "id": 7, "lvl":1, "type": "mele", "col":7, "row":7 },
+		 		{ "id": 8, "lvl":1, "type": "mele", "col":2, "row":7 }
 		 	],
 		 "npcs": [
 		 		{ "id": 1, "type": "npc", "col":8, "row":1 },
