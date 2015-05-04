@@ -19,6 +19,7 @@ function GameMenu() {
 	this.inventoryMenuOpened = false;
 	this.npcMenuOpened = false;
 	this.preCombatMenuOpened = false;
+	this.itemPickMenuOpened = false;
 	
 	this.questsSelected = false;
 	this.statsSelected = false;
@@ -58,6 +59,7 @@ function GameMenu() {
 	this.npcMenu = new NpcMenu();
 	this.preCombatMenu = new PreCombatMenu();
 	this.playerGui = new PlayerGui();
+	this.itemPickMenu = new ItemPickedUpMenu();
 }
 
 GameMenu.prototype.UpdatePlayerRef = function(player) {
@@ -85,6 +87,9 @@ GameMenu.prototype.Draw = function(ctx){
 	} else if(this.preCombatMenuOpened){
 		this.preCombatMenu.Draw(ctx);
 		return;
+	} else if(this.itemPickMenuOpened){
+		this.itemPickMenu.Draw(ctx);
+		return;
 	}
 	
 	this.playerGui.Draw(ctx);
@@ -110,6 +115,7 @@ GameMenu.prototype.deselectAllMenus = function() {
 	this.inventoryMenuOpened = false;
 	this.npcMenuOpened = false;
 	this.preCombatMenuOpened = false;
+	this.itemPickMenuOpened = false;
 }
 
 GameMenu.prototype.deselectAllBtns = function() {

@@ -41,6 +41,7 @@
     <script type="text/javascript" src="./js/views/InventoryMenu.js"></script> 
     <script type="text/javascript" src="./js/views/NpcMenu.js"></script>
     <script type="text/javascript" src="./js/views/PreCombatMenu.js"></script> 
+    <script type="text/javascript" src="./js/views/ItemPickedUpMenu.js"></script> 
      
      <script type="text/javascript" src="./js/fsm/ViewMachine.js"></script>
     

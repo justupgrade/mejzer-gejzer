@@ -144,7 +144,8 @@ function Main() {
     	inventoryController.addItem(newItem);
     	map.RemoveItem(item);
     	
-    	self.Draw();
+    	view.change(new ItemPickUpView(view));
+    	view.update(null);
     }
     movementController.SetItemCallback(this.OpenFoundItemWindow);
     

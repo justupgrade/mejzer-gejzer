@@ -227,60 +227,6 @@ function NpcView(machine){
 	}
 }
 
-function PreCombatView(machine){
-	var mouseX, mouseY;
-	var self = this;
-	self.machine = machine;
-	var controller;
-	
-	
-	this.Enter = function(root){
-		self.root = root;
-		container = self.root.GetGameMenu().preCombatMenu;
-		controller = self.root.GetCombatController();
-	}
-	
-	this.Update = function(e){
-		self.root.GetGameMenu().preCombatMenuOpened = true;
-		if(!e) {
-			self.root.Draw();
-			return;
-		}
-		//console.log("stats view update test:", self.UpdateTest(e));
-		mouseX = e.pageX - e.target.offsetLeft;
-    	mouseY = e.pageY - e.target.offsetTop;
-		
-		if(e.type === "mousemove") {
-			self.MouseMoveHandler();
-		} else if(e.type === "click"){
-			self.MouseClickHanlder();
-		}
-		
-		self.root.Draw();
-	}
-	
-	this.MouseMoveHandler = function() {
-		//highlight close button
-		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
-			container.isMouseOverCloseBtn = true;
-		} else if(mouseX > container.combatBtnX && mouseX < 110 && mouseY > 10 && mouseY < 60){
-			container.isMouseOverCombatBtn = true;
-		}
-	}
-	
-	this.MouseClickHanlder = function() {
-		//close stats menu; return to main game menu
-		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
-			self.root.GetGameMenu().deselectAllMenus();
-			self.machine.change(new GameView(self.machine));
-		} else if(mouseX > container.combatBtnX && mouseX < 110 && mouseY > 10 && mouseY < 60){
-			controller.solveCombat();
-			self.root.GetGameMenu().deselectAllMenus();
-			self.machine.change(new GameView(self.machine));
-		}
-	}
-}
-
 function StatsView(machine){
 	var mouseX, mouseY;
 	var self = this;
@@ -428,6 +374,105 @@ function InventoryView(machine){
 				container.selectedItem = controller.GetItemByIdx(itemIDX);
 				//console.log(itemIDX);
 			}
+		}
+	}
+}
+
+function ItemPickUpView(machine){
+	var mouseX, mouseY;
+	var self = this;
+	self.machine = machine;
+	
+	this.Enter = function(root){
+		self.root = root;
+		container = self.root.GetGameMenu().itemPickMenu;
+	}
+	
+	this.Update = function(e){
+		self.root.GetGameMenu().itemPickMenuOpened = true;
+		if(!e) {
+			self.root.Draw();
+			return;
+		}
+		//console.log("stats view update test:", self.UpdateTest(e));
+		mouseX = e.pageX - e.target.offsetLeft;
+    	mouseY = e.pageY - e.target.offsetTop;
+		
+		if(e.type === "mousemove") {
+			self.MouseMoveHandler();
+		} else if(e.type === "click"){
+			self.MouseClickHanlder();
+		}
+		
+		self.root.Draw();
+	}
+	
+	this.MouseMoveHandler = function() {
+		//highlight close button
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			container.isMouseOverCloseBtn = true;
+		}
+	}
+	
+	this.MouseClickHanlder = function() {
+		//close stats menu; return to main game menu
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			self.root.GetGameMenu().deselectAllMenus();
+			self.machine.change(new GameView(self.machine));
+		}
+	}
+}
+
+function PreCombatView(machine){
+	var mouseX, mouseY;
+	var self = this;
+	self.machine = machine;
+	var controller;
+	
+	
+	this.Enter = function(root){
+		self.root = root;
+		container = self.root.GetGameMenu().preCombatMenu;
+		controller = self.root.GetCombatController();
+	}
+	
+	this.Update = function(e){
+		self.root.GetGameMenu().preCombatMenuOpened = true;
+		if(!e) {
+			self.root.Draw();
+			return;
+		}
+		//console.log("stats view update test:", self.UpdateTest(e));
+		mouseX = e.pageX - e.target.offsetLeft;
+    	mouseY = e.pageY - e.target.offsetTop;
+		
+		if(e.type === "mousemove") {
+			self.MouseMoveHandler();
+		} else if(e.type === "click"){
+			self.MouseClickHanlder();
+		}
+		
+		self.root.Draw();
+	}
+	
+	this.MouseMoveHandler = function() {
+		//highlight close button
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			container.isMouseOverCloseBtn = true;
+		} else if(mouseX > container.combatBtnX && mouseX < 110 && mouseY > 10 && mouseY < 60){
+			container.isMouseOverCombatBtn = true;
+		}
+	}
+	
+	this.MouseClickHanlder = function() {
+		//close stats menu; return to main game menu
+		if(mouseX > 690 && mouseX < 790 && mouseY > 10 && mouseY < 60){
+			self.root.GetGameMenu().deselectAllMenus();
+			self.machine.change(new GameView(self.machine));
+		} else if(mouseX > container.combatBtnX && mouseX < 110 && mouseY > 10 && mouseY < 60){
+			controller.solveCombat();
+			self.root.GetGameMenu().deselectAllMenus();
+			self.machine.change(new GameView(self.machine));
 		}
 	}
 }
