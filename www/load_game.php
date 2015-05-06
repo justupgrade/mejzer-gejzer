@@ -39,8 +39,8 @@
 	} else {//load...
 		$list = array_values(array_diff(scandir($path), array('..', '.')));
 		
-		
 		foreach($list as $filename){
+			if(strpos($filename, "data") === 0) continue;
 			echo "<form action='' method='post'>";
 			echo "<input name='gameToLoadName' type='submit' class='add' style='margin-left: 20px; margin-bottom: 5px' value='".$filename."'>";
 			echo "</form>";

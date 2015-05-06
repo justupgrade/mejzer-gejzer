@@ -189,7 +189,7 @@ SystemController.prototype.getConnections = function(room){
 SystemController.prototype.getStartingSystem = function() {
 	for(var row = 0; row < this.rows; row++){
 		for(var col=0; col < this.cols; col++){
-			if(this.rooms[row][col] && this.rooms[row][col].type == "gate"){
+			if(this.rooms[row][col] && this.rooms[row][col].id == 0){
 				return this.rooms[row][col];
 			} 
 		}

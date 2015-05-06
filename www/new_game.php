@@ -24,7 +24,15 @@
 		mkdir($path,0777,true);
 	}
 	
-	$list = array_diff(scandir($path), array('..', '.'));
+	$list = array_values(array_diff(scandir($path), array('..', '.')));
+	$totalGamesNum = count($list);
+	
+	for($i = $totalGamesNum-1; $i >= 0; $i--){
+		if(strpos($list[$i], "data") === 0) {
+			unset($list[$i]);
+		}
+	}
+	
 	$totalGamesNum = count($list);
 	
 	$newGameName = "game".$totalGamesNum.".json";
