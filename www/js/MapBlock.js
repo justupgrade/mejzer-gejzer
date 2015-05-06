@@ -8,7 +8,7 @@ function MapFactory() {
     this.Monster = new Image();
     this.PlayerBlock = null;
     this.ItemBlock = null;
-    this.QuestBlock = null;
+    this.QuestBlock = new Image();
     this.Floor = null;
 
     var imgsLoaded = 0;
@@ -16,7 +16,7 @@ function MapFactory() {
     var itemsLoaded = 0;
     
     this.isLoaded = function() {
-    	return imgsLoaded === 3 && meleLoaded === 10 && itemsLoaded === 3;
+    	return imgsLoaded === 4 && meleLoaded === 10 && itemsLoaded === 3;
     };
 
     this.Load = function() {
@@ -52,6 +52,7 @@ function MapFactory() {
     this.Wall.src = "img/wall.png";
     this.Monster.src = 'img/mele.png';
     this.Gate.src = 'img/other/gate1.gif';
+    this.QuestBlock.src = 'img/quest.png';
     
     
     this.GetItem = function(type){

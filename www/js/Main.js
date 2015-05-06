@@ -75,6 +75,7 @@ function Main() {
         	inventoryController.SetPlayer(map.GetPlayer());
         	
         	movementController.SetMap(map);
+        	map.RemoveFogAroundPlayer();
         	
         	//console.log('id:' + self.systemController.current.id)
             self.Draw();
@@ -103,7 +104,7 @@ function Main() {
     		inventoryController.SetPlayer(map.GetPlayer());
     		movementController.SetMap(map);
     		
-    		
+    		map.RemoveFogAroundPlayer();
     		self.Draw();
     		console.log('id:' + self.systemController.current.id);
     	}

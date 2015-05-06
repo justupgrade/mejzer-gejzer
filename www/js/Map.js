@@ -86,15 +86,18 @@ function Map(factory) {
         this.rows = data.length;
 
         this.map = [];
+        this.fog = [];
 
-        var array;
+        var array, fogRow;
         var type = 0;
         var cell = null;
 
         for(var row=0; row < this.rows; row++){
             array = [];
+            fogRow = [];
             for(var col=0; col < this.cols; col++){
                 type = data[row][col];
+                fogRow.push(true);
                 switch(type){
                     case 0: cell = new Empty(); break;
                     case 1: 
@@ -110,7 +113,7 @@ function Map(factory) {
                     case 6: 
                     	cell = new Empty();
                     	if(!this.player) {
-                    		console.log('new player created', this.player);
+                    		//console.log('new player created', this.player);
                     		this.player = new Player();
                         	this.player.SetCords( {"COL":col, "ROW":row} );
                     	}
@@ -122,13 +125,30 @@ function Map(factory) {
                 
                 array.push(cell);
             }
+            this.fog.push(fogRow);
             this.map.push(array);
         }
         
+        //this.RemoveFogAround(this.player.col,this.player.row);
         this.loaded = true;
         
         return this.map;
 
+    }
+    
+    this.RemoveFogAround = function(idx,idy){
+    	for(var row = idy-1; row <= idy+1; row++){
+    		for(var col = idx-1; col <= idx+1; col++){
+    			if(col >= 0 && row >= 0 && col < this.cols && row < this.rows){
+    				this.fog[row][col] = false;
+    			}
+    		}
+    	}
+    }
+    
+    this.RemoveFogAroundPlayer = function() {
+    	var cords = this.player.GetCords();
+    	this.RemoveFogAround(cords.COL, cords.ROW);
     }
 
     this.Update = function() {
@@ -136,17 +156,23 @@ function Map(factory) {
     }
 
     this.Draw = function(ctx) {
-        var tile;
+        var tile, isFog;
         
         for(var row=0; row < this.rows; row++){
             for(var col=0; col < this.cols; col++){
             	tile = this.map[row][col];
+            	isFog = this.fog[row][col];
             	
             	if(tile.GetImage() !== null){
             		ctx.drawImage(tile.GetImage(), tileSize*col,tileSize*row,tileSize,tileSize);
             	} else {
             		ctx.fillStyle = tile.GetFillStyle();
                     ctx.fillRect(tileSize*col,tileSize*row,tileSize,tileSize);
+            	}
+            	
+            	if(isFog){
+            		ctx.fillStyle = "rgba(0,0,0,1)";
+            		ctx.fillRect(tileSize*col,tileSize*row,tileSize,tileSize);
             	}
                 
             }
@@ -156,6 +182,7 @@ function Map(factory) {
         var pCords = this.player.GetCords();
         ctx.fillStyle = this.player.GetFillStyle();
         ctx.fillRect(tileSize*pCords.COL,tileSize*pCords.ROW,tileSize,tileSize);
+       
       //  ctx.arc(30*pCords.COL+15,30*pCords.ROW+15,15,0,2*Math.PI, false);
       //  ctx.fill();
     }
@@ -293,6 +320,7 @@ function Map(factory) {
     	var finish = path[path.length-1];
     	
     	this.player.SetCords({"COL":finish.getCol(), "ROW":finish.getRow()});
+    	this.RemoveFogAround(finish.getCol(),finish.getRow());
     }
     
     this.UpdatePlayerPostion = function(cords){
