@@ -13,7 +13,7 @@
 	if($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if(isset($_POST['cols']) && isset($_POST['rows'])) {
 			if(isset($_POST['loadBtn'])) {
-				if($_SESSION['map']) {
+				if(isset($_SESSION['map'])) {
 					$map = $_SESSION['map'];
 				}
 			} else if(isset($_POST['saveBtn'])) {
