@@ -210,6 +210,7 @@ function Player() {
     }
     
     this.LoadStats = function(stats){
+    	if(!stats) return;
     	this.gold = stats.gold;
     	this.xp = stats.xp;
     	this.lvl = stats.lvl;

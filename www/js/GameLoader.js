@@ -5,6 +5,7 @@
 function GameLoader() {
 	this.playerDataLoaded = false;
 	this.playerData = null;
+	this.itemMemory = null;
 	
 }
 
@@ -21,10 +22,18 @@ GameLoader.prototype.isLoaded = function() {
 }
 
 GameLoader.prototype.onPlayerDataLoaded = function(e) {
-	e.target.self.playerData = JSON.parse(e.target.responseText);
+	if(e.target.responseText != ""){
+		var response = JSON.parse(e.target.responseText);
+		e.target.self.playerData = response['stats'];
+		e.target.self.itemMemory = response['memory'];
+	}
 	e.target.self.playerDataLoaded = true;
 }
 
 GameLoader.prototype.GetPlayerStats = function() {
 	return this.playerData;
+}
+
+GameLoader.prototype.GetItemMemory = function() {
+	return this.itemMemory;
 }

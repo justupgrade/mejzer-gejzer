@@ -4,7 +4,7 @@
 	
 	$user = $_SESSION['user'];
 	
-	$stats = $_POST['stats']; //array object
+	$stats = $_POST['data']; //string json object
 	
 	$path = "../data/games/".$user->getUsername()."/";
 	$filename = "data".$user->lastGame;

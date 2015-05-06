@@ -302,4 +302,17 @@ function Map(factory) {
     this.GetSize = function() {
     	return {'cols':this.cols, 'rows':this.rows};
     }
+    
+    this.UpdateItems = function(memory) {
+    	for(var idx in memory){
+    		for(var idy in this.items){
+    			var item = this.items[idy];
+    			var memoryID = memory[idx];
+    			if(memoryID == item.id){
+    				this.RemoveItem(item);
+    				break;
+    			}
+    		}
+    	}
+    }
 }

@@ -2,9 +2,11 @@ function Inventory() {
 	this.inventory = [];
 	this.weapon = null;
 	this.armor = null;
+	this.memory = [];
 }
 
 Inventory.prototype.add = function(item) {
+	this.memory.push(item.itemID);
 	if(item.type == "weapon") {
 		if(this.weapon == null) this.weapon = item;
 		else this.inventory.push(item);
@@ -58,6 +60,15 @@ Inventory.prototype.changeArmor = function(item) {
 	
 	this.inventory.push(this.armor);
 	this.armor = item;
+}
+
+Inventory.prototype.SerializeMemory = function() {
+	return this.memory;
+}
+
+Inventory.prototype.LoadMemory = function(memory){
+	if(!memory) return;
+	this.memory = memory;
 }
 
 

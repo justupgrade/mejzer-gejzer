@@ -19,6 +19,7 @@
 	
 	if(!is_dir($path)) mkdir($path,0777,true);
 	file_put_contents($path.$filename,$data);
+	file_put_contents($path."data".$filename,"");
 	
 	echo $data;
 ?>

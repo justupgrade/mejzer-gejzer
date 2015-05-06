@@ -1,3 +1,14 @@
+<?php 
+	require_once "classes/User.php";
+	session_start();
+	
+	$user = null;
+	if(!isset($_SESSION['user'])) {
+		//header('Location: login.php');
+	} else {
+		$user = $_SESSION['user'];
+	}
+?>
 <!DOCTYPE html>
 <html>
 <head>

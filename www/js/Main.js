@@ -59,7 +59,10 @@ function Main() {
         if(map.loaded && inventoryController.loaded && factory.isLoaded() && gameLoader.isLoaded()) {
         	clearInterval(self.InitListener);
         	map.loaded = false;
-       // 	console.log(gameLoader.GetPlayerStats());
+        	//console.log(gameLoader.GetPlayerStats());
+        	var memory = gameLoader.GetItemMemory();
+        	map.GetPlayer().GetInventory().LoadMemory(memory);
+        	map.UpdateItems(memory);
         	map.GetPlayer().LoadStats(gameLoader.GetPlayerStats());
         	//update map...
         	self.systemController.updateGates(null,map);
@@ -73,8 +76,7 @@ function Main() {
         	
         	movementController.SetMap(map);
         	
-        	console.log('id:' + self.systemController.current.id);
-        	
+        	//console.log('id:' + self.systemController.current.id)
             self.Draw();
             //ready...
             self.Start();
@@ -85,6 +87,10 @@ function Main() {
     	//console.log('loading new lvl...');
     	if(map.loaded){
     		map.loaded = false;
+    		
+    		var memory = gameLoader.GetItemMemory();
+        	map.UpdateItems(memory);
+        	
     		clearInterval(self.InitListener);
     		self.InitListener = null;
     		self.systemController.updateGates(null,map);
@@ -171,10 +177,11 @@ function Main() {
     
     this.saveGame = function() {
     	var stats = map.GetPlayer().SerializeStats();
-    	//console.log(map.GetPlayer());
+    	var itemMemory = map.GetPlayer().inventory.SerializeMemory();
+    	var data = {"stats":stats, "memory":itemMemory};
     	
     	var formdata = new FormData();
-    	formdata.append('stats', JSON.stringify(stats));
+    	formdata.append('data', JSON.stringify(data));
     	
     	var xhr = new XMLHttpRequest();
     	xhr.addEventListener('load', self.onSaveCompleted);
