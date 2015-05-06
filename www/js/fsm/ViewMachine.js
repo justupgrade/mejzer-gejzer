@@ -273,11 +273,15 @@ function WorldView(machine){
 	var mouseX, mouseY;
 	var self = this;
 	self.machine = machine;
+	var controller;
 	
 	
 	this.Enter = function(root){
 		self.root = root;
 		container = self.root.GetGameMenu().worldMenu;
+		controller = self.root.GetSystemController();
+		container.rooms = controller.rooms;
+		container.currentRoom = controller.current;
 	}
 	
 	this.Update = function(e){

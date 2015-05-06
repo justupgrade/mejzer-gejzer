@@ -83,16 +83,20 @@
 				$array[] = $row;
 			}
 			
+			$count = 0;
+			
 			foreach($this->gates as $gate){
-				$array[$gate->row][$gate->col] = array("type"=>"gate", "col"=>$gate->col, "row"=>$gate->row);
+				$array[$gate->row][$gate->col] = array("id"=>$count, "type"=>"gate", "col"=>$gate->col, "row"=>$gate->row);
+				$count++;
 			}
 			
 			foreach($this->rooms as $room){
-				$array[$room->getRow()][$room->getCol()] = array("type"=>"room", "col"=>$room->getCol(), "row"=>$room->getRow());
+				$array[$room->getRow()][$room->getCol()] = array("id"=>$count, "type"=>"room", "col"=>$room->getCol(), "row"=>$room->getRow());
+				$count++;
 			}
 			
 			$array[$this->center->row][$this->center->col] = 
-				array("type"=>"center", "col"=>$this->center->col, "row"=>$this->center->row);
+				array("id"=>$count, "type"=>"center", "col"=>$this->center->col, "row"=>$this->center->row);
 			
 			return $array;
 		}

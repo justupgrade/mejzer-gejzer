@@ -153,7 +153,9 @@ function Main() {
     this.OpenGateWindow = function(player,gate) {
     	//system controller -> change system; this->load new map...
     	self.systemController.setUpNewSystem(gate,map.GetSize());
-    	map.Load(self.systemController.GetLastLvlID());
+    	var newLvlID = self.systemController.GetLastLvlID();
+    	console.log('new lvl: ' , newLvlID);
+    	map.Load(newLvlID);
     	
     	self.InitListener = setInterval(self.GameLoaded, 50);
     }
@@ -216,5 +218,9 @@ function Main() {
     
     this.GetInventoryController = function() {
     	return inventoryController;
+    }
+    
+    this.GetSystemController = function() {
+    	return self.systemController;
     }
 }

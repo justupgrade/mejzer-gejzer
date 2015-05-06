@@ -7,7 +7,7 @@ function Pathfinder() {
 Pathfinder.prototype.findPath = function() {
     var lastParent = this.start;
     
-    var max = 100;
+    var max = 200;
     var count = 0;
 
     while(lastParent !== this.finish) {
@@ -140,6 +140,11 @@ Pathfinder.prototype.getAdjacentTiles = function(centerTile) {
             tile = this.grid.getTile(j,i);
             if(tile === null) continue;
             if(tile.inClosedList) continue;
+            
+            if(i == row-1 && j == col-1) continue;
+            if(i == row-1 && j == col+1) continue;
+            if(i == row+1 && j == col-1) continue;
+            if(i == row+1 && j == col+1) continue;
 
             if(i === row-1 && j === col+1) {
                 if(!this.grid.getTile(j,i+1).isOpen()) continue;

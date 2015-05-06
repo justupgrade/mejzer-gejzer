@@ -78,7 +78,10 @@ MovementController.prototype.clickedOnGate = function(gate){
 			if(path == null) return;
 			path.splice(path.length-1,1);
 			
-			if(this.isMonsterInPath(path)) {
+			var info = {};
+			if(this.isMonsterInPath(path,info)) {
+				var newPath = path.splice(0,info.IDX);
+				this.map.MovePlayerTo(newPath);
 				return null;
 			} else {
 				//move to target
@@ -116,7 +119,10 @@ MovementController.prototype.clickedOnItemBlock = function(item){
 			if(path == null) return;
 			path.splice(path.length-1,1);
 			
-			if(this.isMonsterInPath(path)) {
+			var info = {};
+			if(this.isMonsterInPath(path,info)) {
+				var newPath = path.splice(0,info.IDX);
+				this.map.MovePlayerTo(newPath);
 				return null;
 			} else {
 				//move to target
@@ -155,7 +161,10 @@ MovementController.prototype.clickedOnQuestBlock = function(npc){
 			
 			path.splice(path.length-1,1); //no need to stand on npc tile...
 			
-			if(this.isMonsterInPath(path)) {
+			var info = {};
+			if(this.isMonsterInPath(path,info)) {
+				var newPath = path.splice(0,info.IDX);
+				this.map.MovePlayerTo(newPath);
 				return null;
 			} else {
 				//move to target
@@ -191,7 +200,10 @@ MovementController.prototype.clickedOnMonster = function(monster) {
 			var path =  this.generatePath(start,finish);
 			path.splice(path.length-1,1);
 			
-			if(this.isMonsterInPath(path)) {
+			var info = {};
+			if(this.isMonsterInPath(path,info)) {
+				var newPath = path.splice(0,info.IDX);
+				this.map.MovePlayerTo(newPath);
 				return null;
 			} else {
 				//move to target
@@ -232,10 +244,11 @@ MovementController.prototype.OpenCombatWindow = function(monster) {
 MovementController.prototype.distanceFromPlayer = function(target) {
 	var playerLocation = this.GetPlayer().GetCords();
 	
+	//console.log(playerLocation.COL, playerLocation.ROW);
 	//console.log(target.col,target.row);
 	
 	if(Math.abs(playerLocation.COL - target.col) <= 1 &&
-			Math.abs(playerLocation.ROW - target.row <= 1)) return 1;
+			Math.abs(playerLocation.ROW - target.row) <= 1) return 1;
 	
 	return 0;
 }
@@ -255,12 +268,18 @@ MovementController.prototype.clickedOnFloor = function(tile) {
 		this.resetSelection();
 		var path = this.generatePath(start,finish);
 		//move to that tile...
-		if(path != null && !this.isMonsterInPath(path)) {
-			//console.log('move to ...' + finish.COL + ", " + finish.ROW);
-			this.map.MovePlayerTo(path);
-		} else {
+		
+		if(!path) return null;
+		
+		var info = {};
+		if(this.isMonsterInPath(path,info)) {
+			var newPath = path.splice(0,info.IDX);
+			this.map.MovePlayerTo(newPath);
 			return null;
+		} else {
+			this.map.MovePlayerTo(path);
 		}
+		
 		return path;
 	}
 	//clicked on tile with player...
@@ -279,10 +298,13 @@ MovementController.prototype.clickedOnFloor = function(tile) {
 	return "last return";
 }
 
-MovementController.prototype.isMonsterInPath = function(path) {
+MovementController.prototype.isMonsterInPath = function(path, ref) {
 	for(var idx in path) {
 		var tile = path[idx];
-		if(tile.hasMonster) return true;
+		if(tile.hasMonster){
+			if(ref) ref.IDX = idx;
+			return true;
+		}
 	}
 	
 	return false;

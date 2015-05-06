@@ -4,6 +4,7 @@
 		public $connections;
 		public $col;
 		public $row;
+		public $id;
 		
 		public function __construct($col,$row){
 			$this->col = $col;

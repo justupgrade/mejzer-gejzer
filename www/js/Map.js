@@ -8,6 +8,8 @@ function Map(factory) {
     
     this.rawQuestData = null;
     
+    this.currentPath = null;
+    
     
     var self = this;
     var tileSize = 30;
