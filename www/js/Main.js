@@ -19,6 +19,7 @@ function Main() {
     this.player = null;
     
     var gameMenu = new GameMenu();
+    var gameLoader = new GameLoader();
     
     this.SetSystemController = function(controller) {
     	this.systemController = controller;
@@ -46,6 +47,7 @@ function Main() {
     }
 
     this.Load = function() {
+    	gameLoader.LoadPlayer();
         factory.Load();
         map.Load(self.systemController.GetLastLvlID());
         inventoryController.Load();
@@ -54,9 +56,11 @@ function Main() {
     
     this.GameReady = function(evt) {
     	//console.log('loading inital...');
-        if(map.loaded && inventoryController.loaded && factory.isLoaded()) {
+        if(map.loaded && inventoryController.loaded && factory.isLoaded() && gameLoader.isLoaded()) {
         	clearInterval(self.InitListener);
         	map.loaded = false;
+       // 	console.log(gameLoader.GetPlayerStats());
+        	map.GetPlayer().LoadStats(gameLoader.GetPlayerStats());
         	//update map...
         	self.systemController.updateGates(null,map);
         	//set references...
@@ -69,6 +73,7 @@ function Main() {
         	
         	movementController.SetMap(map);
         	
+        	console.log('id:' + self.systemController.current.id);
         	
             self.Draw();
             //ready...
@@ -100,7 +105,7 @@ function Main() {
 
     this.Start = function() {
         //add listener to the canvas...
-    	console.log('started');
+    	//console.log('started');
     	_canvas.addEventListener('click', this.onCanvasClick);
     	_canvas.addEventListener("mousemove", this.onCanvasMouseMove);
     }
@@ -151,16 +156,35 @@ function Main() {
     movementController.SetItemCallback(this.OpenFoundItemWindow);
     
     this.OpenGateWindow = function(player,gate) {
+    	//save game:
+    	self.saveGame();
     	//system controller -> change system; this->load new map...
     	self.systemController.setUpNewSystem(gate,map.GetSize());
     	var newLvlID = self.systemController.GetLastLvlID();
-    	console.log('new lvl: ' , newLvlID);
+    	//console.log('new lvl: ' , newLvlID);
     	map.Load(newLvlID);
     	
     	self.InitListener = setInterval(self.GameLoaded, 50);
     }
     
     movementController.SetGateCallback(this.OpenGateWindow);
+    
+    this.saveGame = function() {
+    	var stats = map.GetPlayer().SerializeStats();
+    	//console.log(map.GetPlayer());
+    	
+    	var formdata = new FormData();
+    	formdata.append('stats', JSON.stringify(stats));
+    	
+    	var xhr = new XMLHttpRequest();
+    	xhr.addEventListener('load', self.onSaveCompleted);
+    	xhr.open('POST', 'actions/save_game.php');
+    	xhr.send(formdata);
+    }
+    
+    this.onSaveCompleted = function(e){
+    	//console.log(e.target.responseText);
+    }
 
     this.Run = function() {
         if(this.Init()) this.Load();

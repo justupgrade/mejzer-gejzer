@@ -3,10 +3,10 @@
 	session_start();
 	
 	$user = $_SESSION['user'];
-	$filename = $user->lastGame;
+	$filename = "data".$user->lastGame;
 	
 	$path = "../data/games/".$user->getUsername()."/";
 	
-	//load map data
+	//load player data
 	echo file_get_contents($path.$filename);
 ?>

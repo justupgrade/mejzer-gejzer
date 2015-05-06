@@ -61,7 +61,7 @@
     <script type="text/javascript" src="./js/views/ItemPickedUpMenu.js"></script> 
      
     <script type="text/javascript" src="./js/fsm/ViewMachine.js"></script>
-    
+    <script type="text/javascript" src="./js/GameLoader.js"></script>
     <script type="text/javascript" src="./js/Map.js"></script>
     <script type="text/javascript" src="./js/Main.js"></script>
     

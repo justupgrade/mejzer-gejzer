@@ -198,6 +198,35 @@ function Player() {
     this.GetInventorySize = function() {
     	return this.inventory.inventory.length;
     }
+    
+    this.SerializeStats = function() {
+    	var stats = this.GetStats();
+    	stats['gold'] = this.gold;
+    	stats['xp'] = this.xp;
+    	stats['lvl'] = this.lvl;
+    	stats['current_hp'] = this.currentHP;
+    	
+    	return stats;
+    }
+    
+    this.LoadStats = function(stats){
+    	this.gold = stats.gold;
+    	this.xp = stats.xp;
+    	this.lvl = stats.lvl;
+    	this.currentHp = stats.current_hp;
+    	
+		this.type = stats["TYPE"]; 
+		this.hp = stats["HP"]; 
+		this.strength = stats["STR"];
+		this.stamina = stats["STA"];
+		this.inteligence = stats["INT"];
+		this.speed = stats["SP"];
+		this.energy = stats["EP"];
+		this.ranged_strength = stats['RNS'];
+		this.armor = stats['ARM'];
+		this.offensiveAbility = stats['OA'];
+    	this.defensiveAbility = stats['DA'];
+    }
 }
 
 Player.prototype = new MapBlock();
