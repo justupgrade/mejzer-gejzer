@@ -1,0 +1,60 @@
+@CHARSET "UTF-8";
+
+
+.block-options {
+	padding: 10px;
+	overflow: hidden;
+	background: #888b90;
+}
+
+.option {
+	margin: 1px;
+}
+
+.active-block {
+	border: 2px solid #1e90ff;
+}
+
+.map {
+	overflow: hidden;
+}
+
+.map-row {
+	
+}
+
+.map-cell {
+	float:left;
+	width: 30px;
+	height: 30px;
+	background: #fff;
+	font-size: 1px;
+}
+
+.type0 {
+	background: #fff;
+}
+
+.type1 {
+	background: black;
+}
+
+.type2 {
+	background: #640000;
+}
+
+.type3 {
+	background: red;
+}
+
+.type4 {
+	background: blue;
+}
+
+.type5 {
+	background: green;
+}
+
+.type6 {
+	background: #fc617c;
+}
