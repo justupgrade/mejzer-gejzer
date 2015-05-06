@@ -1,0 +1,342 @@
+/*
+	home-hello_section
+*/
+@font-face {
+	font-family: NordsternDemoNormal;
+	src: url("NordsternDemo-Normal.ttf") format('truetype');
+}
+
+@font-face {
+	font-family: modernVision;
+	src: url("Modern-Vision.ttf") format('truetype');
+}
+
+body {
+	font-family: NordsternDemoNormal;
+}
+
+.special-chars {
+	font-family: Verdana;
+}
+
+.default-style {
+	background: #333333;
+	color: #DB9B3A;
+}
+
+.orange-white-style {
+	background: #D95C1F;
+	color: #FFFFFF;
+}
+
+.blue-blue-style {
+	background: #3AB3DB;
+	color: #155CC6;
+}
+
+.dark_gray-orange-style {
+	background: #333333;
+	color: #DB9B3A;
+}
+
+.green-green-style {
+	background: #094d05;
+	color: #1eb717;
+}
+
+/*
+	home-hello_section
+*/
+
+
+section#hello-cont {
+	overflow: hidden;
+	margin-bottom: 5px;
+	position: relative;
+}
+
+#hello-cont div.left-cont {
+	float:left;
+	width: 70%;
+	padding-left: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#hello-cont div.right-cont {
+	right: 0;
+	height: 100%;
+	position: absolute;
+	-moz-box-sizing: border-box;
+	border-left: 5px solid white;
+	padding: 14px;
+	cursor: pointer;
+}
+
+#hello-cont div.right-cont:hover {
+	background: black;
+	color: white;
+}
+
+#hello-cont div.right-cont:active {
+	background: white;
+	color: black;
+}
+
+#hello-cont span#random-quote {
+	font-style: italic;
+	text-align: center;
+	display: block;
+}
+
+/*
+	navigation
+*/
+
+
+nav {
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+
+nav div.nav-style {
+	float: left;
+	width: 300px;
+	text-align: center;
+	display: block;
+	padding: 5px 0px;
+	border-left: 5px solid white;
+	border-right: 5px solid white;
+	-moz-box-sizing: border-box;
+	cursor: pointer;
+}
+
+nav div.nav-style:hover {
+	background: black;
+	color: white;
+}
+
+nav div.nav-style:active {
+	background: white;
+	color: black;
+}
+
+
+
+/*
+	content div 
+*/
+
+div#content {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+
+.input-label {
+	display: block;
+	width: 100%;
+}
+
+#sidebar {
+	border: 1px solid gray;
+	width: 30%;
+	height: 100%;
+	right: 0;
+	position: absolute;
+}
+
+
+
+/*
+	footer
+*/
+
+#footer {
+	border: 1px solid gray;
+	overflow: hidden;
+}
+
+#footer #left-footer {
+	float: left;
+	padding: 5px 0px;
+	padding-left: 10px;
+}
+
+#footer #right-footer {
+	float: right;
+	padding: 5px 0px;
+	padding-right: 10px;
+}
+
+/*
+users-list-section
+*/
+
+#users-list-section {
+	float: left;
+	width: 70%;
+	margin-right: 5px;
+}
+
+#users-list-section article {
+	margin-right: 5px;
+}
+
+
+/*
+login
+*/
+
+.input-button {
+	padding: 5px;
+	border: none;
+	margin-left: 5px;
+	margin-bottom: 5px; 
+	font-family: NordsternDemoNormal;
+}
+
+.input-button:hover {
+	color: white;
+	background: black;
+}
+
+.input-button:active {
+	color: black;
+	background: white;
+}
+
+.change-form {
+	border: 1px solid black;
+	margin-bottom: 5px;
+}
+
+.change-form form p {
+	text-align: center;
+}
+
+
+
+#login-form {
+	border: 1px solid black;
+	margin-bottom: 5px;
+}
+
+#change-username-form {
+	border: 1px solid black;
+	margin-bottom: 5px;
+}
+
+#login-form, #change-username-form form p {
+	text-align: center;
+}
+
+#loginFormBtn {
+	padding: 5px;
+	border: none;
+	margin-left: 5px;
+	margin-bottom: 5px; 
+	font-family: NordsternDemoNormal;
+}
+
+#changeUsernameFormBtn {
+	padding: 5px;
+	border: none;
+	margin-left: 5px;
+	margin-bottom: 5px; 
+	font-family: NordsternDemoNormal;
+}
+
+#changeUsernameFormBtn:hover {
+	color: white;
+	background: black;
+}
+
+#changeUsernameFormBtn:active {
+	color: black;
+	background: white;
+}
+
+#loginFormBtn:hover {
+	color: white;
+	background: black;
+}
+
+#loginFormBtn:active {
+	color: black;
+	background: white;
+}
+
+.login-input {
+	padding: 5px;
+	overflow: hidden;
+}
+
+.login-input div {
+	width: 20%;
+	float:left;
+}
+
+.login-input input {
+	background: gray;
+	border: none;
+	float: left;
+	padding: 5px;
+	width: 300px;
+}
+
+#login-info {
+	
+}
+
+.field-info {
+	padding: 5px;
+	font-size: 0.75em;
+	color: white;
+}
+
+#password-info {
+
+}
+
+#login-form-feedback {
+	
+}
+
+.form-feedback {
+	color: red;
+	text-align: center;
+}
+
+#create-account-id {
+	width: 300px;
+}
+
+#create-account-form {
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+
+#create-account-form form p {
+	text-align: center;
+}
+
+#createFormBtn {
+	border: none;
+	padding: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	font-family: NordsternDemoNormal;
+}
+
+#createFormBtn:hover {
+	background: black;
+	color: white;
+}
+
+#createFormBtn:active {
+	background: white;
+	color: black;
+}

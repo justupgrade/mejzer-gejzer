@@ -77,6 +77,7 @@ SystemController.prototype.ParseSystem = function(data){
 
 SystemController.prototype.updatePlayerStartingPosition = function(map) {
 	//move player to the entrance (if exists)
+	
 	if(this.entrance){
 		var gate = map.GetGateByDescriptor(this.getGateDescriptor(map,this.entrance));
 		var directions = {"left": [0,-1], "right":  [0,1], "top":  [-1,0], "bottom":  [1,0] };
@@ -96,12 +97,12 @@ SystemController.prototype.updatePlayerStartingPosition = function(map) {
  */
 //remove gates from map that should not be there...
 SystemController.prototype.updateGates = function(system,map) {
-	if(system === null) {
-		if(!this.current){
+	if(system === null) {//magic! -> null arg? no problem! :D
+		if(!this.current){ //first load
 			system = this.getSystemById(this.lastLvlID, map.GetSize());
 			this.current = system;
 		} else {
-			system = this.current;
+			system = this.current; //override function arg
 		}
 	}
 	

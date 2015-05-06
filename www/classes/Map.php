@@ -27,7 +27,7 @@
         }
         
         public function getRoom() {
-        	return $this->map;
+        	return $this->map[$this->lvlIDX];
         }
 
 

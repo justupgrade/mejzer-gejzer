@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+input.send {
+		float:left;
+		display: inline-block;
+		border: medium none;
+		background-color: #008CBA;
+		color: #fff;
+		cursor: pointer;
+		padding: 5px;
+		width:150px;
+	}
+	input.add {
+		display: inline-block;
+		border: medium none;
+		background-color: #23BA42;
+		color: #fff;
+		cursor: pointer;
+		padding: 5px;
+		width:150px;
+	}
+	input.remove {
+		display: inline-block;
+		border: medium none;
+		background-color: #ED4107;
+		color: #fff;
+		cursor: pointer;
+		padding: 5px;
+		width:150px;
+	}

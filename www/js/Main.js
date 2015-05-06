@@ -54,7 +54,8 @@ function Main() {
     
     this.GameReady = function(evt) {
     	//console.log('loading inital...');
-        if(map.loaded && inventoryController.loaded) {
+        if(map.loaded && inventoryController.loaded && factory.isLoaded()) {
+        	clearInterval(self.InitListener);
         	map.loaded = false;
         	//update map...
         	self.systemController.updateGates(null,map);
@@ -68,7 +69,7 @@ function Main() {
         	
         	movementController.SetMap(map);
         	
-            clearInterval(self.InitListener);
+        	
             self.Draw();
             //ready...
             self.Start();
@@ -81,7 +82,6 @@ function Main() {
     		map.loaded = false;
     		clearInterval(self.InitListener);
     		self.InitListener = null;
-    		
     		self.systemController.updateGates(null,map);
     		self.systemController.updatePlayerStartingPosition(map);
     		

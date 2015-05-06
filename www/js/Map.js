@@ -7,7 +7,6 @@ function Map(factory) {
     this.rows = 0;
     
     this.rawQuestData = null;
-    this.gates = [];
     
     
     var self = this;
@@ -19,7 +18,7 @@ function Map(factory) {
      */
     this.Load = function(lvl) {
         var formdata = new FormData();
-        formdata.append('lvl', 0);
+        formdata.append('lvl', lvl);
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', this.OnMapLoadHandler); //this.onMapLoadHandler
         xhr.open('POST', './actions/load_level.php');
@@ -65,8 +64,22 @@ function Map(factory) {
     		this.monsters.push(factory.create(descriptor));
     	}
     }
+    
+    this.GetItemRef = function(col,row) {
+    	
+    	for(var idx in this.items) {
+    		var item = this.items[idx];
+    		if(item.col == col && item.row == row){
+    			//console.log(item.ref);
+    			return item.ref;
+    		}
+    	}
+    	
+    	return null;
+    }
 
     this.ParseMap = function(data) {
+    	this.gates = [];
         this.cols = data[0].length;
         this.rows = data.length;
 
@@ -89,7 +102,9 @@ function Map(factory) {
                     case 2: cell = new Wall(); break;
                     case 3: cell = new Monster(); break;
                     case 4: cell = new QuestBlock(); break;
-                    case 5: cell = new ItemBlock(); break;
+                    case 5: 
+                    	cell = new ItemBlock(this.GetItemRef(col,row)); 
+                    	break;
                     case 6: 
                     	cell = new Empty();
                     	if(!this.player) {
@@ -101,11 +116,13 @@ function Map(factory) {
                     	break;
                 }
                 cell.SetCords({"COL":col, "ROW":row});
+                cell.ImageRepository = this.factory;
+                
                 array.push(cell);
             }
             this.map.push(array);
         }
-
+        
         this.loaded = true;
         
         return this.map;
@@ -117,11 +134,19 @@ function Map(factory) {
     }
 
     this.Draw = function(ctx) {
+        var tile;
         
         for(var row=0; row < this.rows; row++){
             for(var col=0; col < this.cols; col++){
-                ctx.fillStyle = this.map[row][col].GetFillStyle();
-                ctx.fillRect(tileSize*col,tileSize*row,tileSize,tileSize);
+            	tile = this.map[row][col];
+            	
+            	if(tile.GetImage() !== null){
+            		ctx.drawImage(tile.GetImage(), tileSize*col,tileSize*row,tileSize,tileSize);
+            	} else {
+            		ctx.fillStyle = tile.GetFillStyle();
+                    ctx.fillRect(tileSize*col,tileSize*row,tileSize,tileSize);
+            	}
+                
             }
         }
         
@@ -228,6 +253,7 @@ function Map(factory) {
     	//put wall in gui:
     	var cell = new Wall();
     	cell.SetCords({"COL":gate.col, "ROW":gate.row});
+    	cell.ImageRepository = this.factory;
     	this.map[gate.row][gate.col] = cell;
     	//remove gate from memory...
     	this.gates.splice(gateIDX,1);
@@ -240,6 +266,7 @@ function Map(factory) {
     			//monster to remove found!
     			var cell = new Empty();
     			cell.SetCords({"COL":monster.col, "ROW":monster.row});
+    			cell.ImageRepository = this.factory;
     			this.map[monster.row][monster.col] = cell;
     			this.monsters.splice(idx,1);
     			break;
@@ -250,6 +277,7 @@ function Map(factory) {
     this.RemoveItem = function(item){
     	var cell = new Empty();
     	cell.SetCords({"COL":item.col, "ROW":item.row});
+    	cell.ImageRepository = this.factory;
     	this.map[item.row][item.col] = cell;
     	var idx = this.items.indexOf(item);
     	this.items.splice(idx,1);
