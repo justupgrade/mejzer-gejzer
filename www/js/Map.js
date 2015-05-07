@@ -97,7 +97,7 @@ function Map(factory) {
             fogRow = [];
             for(var col=0; col < this.cols; col++){
                 type = data[row][col];
-                fogRow.push(false);
+                fogRow.push(true);
                 switch(type){
                     case 0: cell = new Empty(); break;
                     case 1: 
