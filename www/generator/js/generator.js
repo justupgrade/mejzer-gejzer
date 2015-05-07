@@ -53,5 +53,5 @@ function onMapClick(e){
 }
 
 function onMapUpdated(e){
-	//console.log(e.target.responseText);
+	console.log(e.target.responseText);
 }

@@ -23,6 +23,14 @@ InventoryController.prototype.Load = function() {
     xhr.send(null);
 }
 
+InventoryController.prototype.LoadItems = function(loadedItems){
+	if(loadedItems){
+		for(var idx in loadedItems) {
+			this.addItem(this.GetNewItemById(loadedItems[idx]));
+		}
+	}
+}
+
 InventoryController.prototype.OnItemLoadedHandler = function(e){
 	//alert(e.target);
 	e.target.self.ParseItems(JSON.parse(e.target.responseText)['items']);
@@ -41,8 +49,18 @@ InventoryController.prototype.ParseItems = function(data){
 	
 }
 
-InventoryController.prototype.GetNewItemById = function(itemID){
+InventoryController.prototype.GetNewItemByIdx = function(itemID){
 	return this.items[itemID-1];
+}
+
+InventoryController.prototype.GetNewItemById = function(itemID){
+	for(var idx in this.items){
+		var item = this.items[idx];
+		
+		if(item.itemID == itemID) return item;
+	}
+	
+	return null;
 }
 
 

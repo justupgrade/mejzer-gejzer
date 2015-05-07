@@ -10,6 +10,11 @@
 		{ "id": 7, "item_name": "full plate", "type": "armor", "protection": 2 },
 		{ "id": 8, "item_name": "full plate", "type": "armor", "protection": 3 },
 		{ "id": 9, "item_name": "full plate", "type": "armor", "protection": 4 },
-		{ "id": 10, "item_name": "Old Stick", "type": "quest"}
+		{ "id": 10, "item_name": "Old Stick", "type": "quest"},
+		{ "id": 11, "item_name": "Honey", "type": "food_item", "hp_restore": 1},
+		{ "id": 12, "item_name": "Honey", "type": "food_item", "hp_restore": 2},
+		{ "id": 13, "item_name": "Honey", "type": "food_item", "hp_restore": 3},
+		{ "id": 14, "item_name": "Honey", "type": "food_item", "hp_restore": 4},
+		{ "id": 15, "item_name": "Honey", "type": "food_item", "hp_restore": 5}
 	]
 }

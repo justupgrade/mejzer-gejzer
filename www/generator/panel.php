@@ -1,32 +1,19 @@
 <?php
 	session_start();
-	require_once "../classes/User.php";
+	function __autoload($name) {
+		include_once '../classes/'.$name.'.php';
+	}
 	
 	if($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if(isset($_POST['SubmitLoginBtn']) && isset($_POST['email']) && isset($_POST['password'])){
 		require_once '../includes/connection.php';
 			
-		$username = $conn->real_escape_string($_POST['email']);
+		$email = $conn->real_escape_string($_POST['email']);
 		$password = $conn->real_escape_string($_POST['password']);
 			
-		$query = "SELECT * FROM users WHERE username='" . $username . "'";
-		$query .= " OR email='".$username ."'";
-
-		$result=$conn->query($query);
-		if(!$result) $out['message'] = "Error: " . $conn->error;
-		else {
-			if($result->num_rows>0) {
-				//username found -> compare passwords...
-				$row = $result->fetch_array(MYSQLI_ASSOC);
-				$hashed = $row['password'];
-
-				if(password_verify($password,$hashed)) {
-						//create user...
-					$admin = new User($row['id'], $row['email'], $row['username']);
-				}
-			}
-		}
-			
+		DBObject::SetUpConnection($conn);
+		$admin = Admin::Authenticate($email, $password);
+		
 		if($admin){
 			$_SESSION['user'] = null;
 			$_SESSION['admin'] = $admin;

@@ -62,6 +62,7 @@ function Main() {
         	//console.log(gameLoader.GetPlayerStats());
         	var memory = gameLoader.GetItemMemory();
         	map.GetPlayer().GetInventory().LoadMemory(memory);
+        	
         	map.UpdateItems(memory);
         	map.GetPlayer().LoadStats(gameLoader.GetPlayerStats());
         	//update map...
@@ -73,6 +74,7 @@ function Main() {
         	npcController.SetUpPlayer(map.GetPlayer());
         	
         	inventoryController.SetPlayer(map.GetPlayer());
+        	inventoryController.LoadItems(gameLoader.GetItems());
         	
         	movementController.SetMap(map);
         	map.RemoveFogAroundPlayer();
@@ -105,6 +107,9 @@ function Main() {
     		movementController.SetMap(map);
     		
     		map.RemoveFogAroundPlayer();
+    		
+    		console.log(map.items, inventoryController.items);
+    		
     		self.Draw();
     		console.log('id:' + self.systemController.current.id);
     	}
@@ -177,9 +182,12 @@ function Main() {
     movementController.SetGateCallback(this.OpenGateWindow);
     
     this.saveGame = function() {
-    	var stats = map.GetPlayer().SerializeStats();
-    	var itemMemory = map.GetPlayer().inventory.SerializeMemory();
-    	var data = {"stats":stats, "memory":itemMemory};
+    	var player = map.GetPlayer();
+    	var stats = player.SerializeStats();
+    	var items = player.inventory.SerializeInventory();
+    	var itemMemory = player.inventory.SerializeMemory();
+    	
+    	var data = {"stats":stats, "memory":itemMemory, "items":items};
     	
     	var formdata = new FormData();
     	formdata.append('data', JSON.stringify(data));

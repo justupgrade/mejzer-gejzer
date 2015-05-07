@@ -14,15 +14,20 @@ function MapFactory() {
     var imgsLoaded = 0;
     var meleLoaded = 0;
     var itemsLoaded = 0;
+    var monstersLoaded = 0;
     
     this.isLoaded = function() {
-    	return imgsLoaded === 4 && meleLoaded === 10 && itemsLoaded === 3;
+    	return imgsLoaded === 4 && 
+    	meleLoaded === 10 && 
+    	itemsLoaded === 4 && 
+    	monstersLoaded === 10;
     };
 
     this.Load = function() {
     	imgsLoaded = 0;
     	this.loadMeleEnemies();
     	this.loadItems();
+    	this.loadMonsters();
     	for(var key in this) if(this[key] != null) this[key].onload = function() { imgsLoaded++; }
     }
     
@@ -37,8 +42,19 @@ function MapFactory() {
     	}
     }
     
+    var monsters = [];
+    this.loadMonsters = function() {
+    	var img;
+    	for(var i=0; i < 10; i++){
+    		var img = new Image();
+    		img.onload = function() { monstersLoaded++; }
+    		monsters.push(img);
+    		img.src = "img/monster/m"+(i+1)+".png";
+    	}
+    }
+    
     var items = []; //weapon, armor, stick
-    var sources = ["weapon.png", "armor.png", "stick.png"];
+    var sources = ["weapon.png", "armor.png", "stick.png", "honey.png"];
     this.loadItems = function() {
     	var img;
     	for(var idx = 0; idx < sources.length; idx++) {
@@ -64,9 +80,17 @@ function MapFactory() {
     		return items[1];
     	case "stick": 
     		return items[2];
+    	case "food":
+    		return items[3];
     		default:
     	return null;
     	}
+    }
+    
+    this.GetMonster = function(){
+    	var idx = Math.floor(Math.random()*10);
+    	
+    	return monsters[idx];
     }
     
     this.GetMeleEnemy = function() {
@@ -133,7 +157,11 @@ function Wall() {
 function Monster() {
 	var img = null;
     this.GetImage = function() {
-    	if(!img) img = this.ImageRepository.GetMeleEnemy();
+    	if(!img){
+    		var rand = Math.random() * 100;
+    		if(rand > 25) img = this.ImageRepository.GetMeleEnemy();
+    		else img = this.ImageRepository.GetMonster();
+    	}
         return  img;
     }
     this.GetFillStyle = function() {

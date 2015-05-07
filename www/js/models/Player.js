@@ -133,6 +133,10 @@ function Player() {
     }
     
     this.CompleteQuest = function(quest){
+    	if(quest.type == 'find_item'){
+    		var item = this.inventory.getById(quest.item_id);
+    		this.inventory.remove(item);
+    	}
     	quest.MarkAsCompleted();
     	this.gold += quest.GetRewardGold();
     	this.UpdateExp(quest.GetRewardExp());

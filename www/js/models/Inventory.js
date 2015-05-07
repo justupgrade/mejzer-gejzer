@@ -6,7 +6,10 @@ function Inventory() {
 }
 
 Inventory.prototype.add = function(item) {
-	this.memory.push(item.itemID);
+	if(this.memory.indexOf(item.itemID) == -1) {
+		this.memory.push(item.itemID);
+	}
+	
 	if(item.type == "weapon") {
 		if(this.weapon == null) this.weapon = item;
 		else this.inventory.push(item);
@@ -64,6 +67,19 @@ Inventory.prototype.changeArmor = function(item) {
 
 Inventory.prototype.SerializeMemory = function() {
 	return this.memory;
+}
+
+Inventory.prototype.SerializeInventory = function() {
+	var array = [];
+	if(this.weapon) array.push(this.weapon);
+	if(this.armor) array.push(this.armor);
+	
+	for(var idx in this.inventory){
+		var item = this.inventory[idx];
+		array.push(item.itemID);
+	}
+	
+	return array;
 }
 
 Inventory.prototype.LoadMemory = function(memory){

@@ -5,21 +5,77 @@
 		private $rows;
 		private $monsterLvl;
 		
-		private $monsters;
-		private $items;
-		private $npcs;
-		private $quests;
+		public $monsters;
+		public $items;
+		public $npcs;
+		public $quests;
 		
-		private $RawTiles; //test purposes ? easier with array; no need for MapCell()?
+		public $lvl;
+		
+		public $RawTiles; //test purposes ? easier with array; no need for MapCell()?
 		
 		static public $row_limit = 15;
 		static public $col_limit = 20;
 		
 		public function __construct($cols,$rows,$mLVL) {
 			$this->tiles = array();
-			$this->cols = $cols;
-			$this->rows = $rows;
+			$this->cols = intval($cols);
+			$this->rows = intval($rows);
 			$this->monsterLvl = intval($mLVL);
+		}
+		
+		static public function ParseFromRaw($raw){
+			//var_dump($raw);
+			$map = new Map(count($raw['room'][0]), count($raw['room']), 1);
+			$map->RawTiles = $raw['room'];
+			$map->monsters = $map->parseMonsters($raw['monsters']);
+			$map->npcs = $map->parseNpcs($raw['npcs']);
+			$map->quests = $raw['quests'];
+			$map->items = $map->parseItems($raw['items_in_room']);
+			
+			return $map;
+		}
+		
+		public function parseItems($raw){
+			$array = array();
+			foreach($raw as $item){
+				$array[] = array(
+						"col"=> $item['col'],
+						"row"=> $item['row'],
+						"id"=>$item['id']
+				);
+			}
+		
+			return $array;
+		}
+		
+		public function parseNpcs($raw){
+			$array = array();
+			foreach($raw as $npc){
+				$array[] = array(
+						"type"=> $npc['type'],
+						"col"=> $npc['col'],
+						"row"=> $npc['row'],
+						"id"=>$npc['id']
+				);
+			}
+				
+			return $array;
+		}
+		
+		public function parseMonsters($raw){
+			$array = array();
+			foreach($raw as $monster){
+				$array[] = array(
+					"type"=> $monster['type'],
+					"lvl"=> $monster['lvl'],
+					"col"=> $monster['col'],
+					"row"=> $monster['row'],
+					"id"=>$monster['id']
+				);
+			}
+			
+			return $array;
 		}
 		
 		/*
@@ -88,20 +144,20 @@
 		
 		public function update($col,$row,$newType) {
 			$oldType = $this->RawTiles[$row][$col];
-			if($oldType === 3) { //monster -> remove from monsters array
+			if($oldType == 3) { //monster -> remove from monsters array
 				$this->removeMonster($col,$row);
-			} elseif($oldType === 4){ //npc / quest
+			} elseif($oldType == 4){ //npc / quest
 				$this->removeNpc($col,$row);
-			} elseif($oldType === 5) { //item
+			} elseif($oldType == 5) { //item
 				$this->removeItem($col,$row);
 			}
 			
 			$this->RawTiles[$row][$col] = $newType;
-			if($newType === 3) { //add monster
+			if($newType == 3) { //add monster
 				$this->addMonster($col,$row);
-			} elseif($oldType === 4){ //npc / quest
+			} elseif($newType == 4){ //npc / quest
 				$this->addNpc($col,$row);
-			} elseif($oldType === 5) { //item
+			} elseif($newType == 5) { //item
 				$this->addItem($col,$row);
 			}
 		}
@@ -123,7 +179,7 @@
 		
 		public function removeMonster($col,$row) {
 			foreach($this->monsters as $idx => $monster){
-				if($monster["col"] === $col && $monster["row"] === $row){
+				if($monster["col"] == $col && $monster["row"] == $row){
 					unset($this->monsters[$idx]);
 					break;
 				}
@@ -132,7 +188,7 @@
 		//remove npc and quests...
 		public function removeNpc($col,$row) {
 			foreach($this->npcs as $idx => $npc){
-				if($npc["col"] === $col && $npc["row"] === $row){
+				if($npc["col"] == $col && $npc["row"] == $row){
 					unset($this->npcs[$idx]);
 					break;
 				}
@@ -141,7 +197,7 @@
 		
 		public function removeQuest($col,$row) {
 			foreach($this->quests as $idx => $quest){
-				if($quest["col"] === $col && $quest["row"] === $row){
+				if($quest["col"] == $col && $quest["row"] == $row){
 					unset($this->quests[$idx]);
 					break;
 				}
@@ -150,7 +206,7 @@
 		
 		public function removeItem($col,$row) {
 			foreach($this->items as $idx => $item){
-				if($item["col"] === $col && $item["row"] === $row){
+				if($item["col"] == $col && $item["row"] == $row){
 					unset($this->items[$idx]);
 					break;
 				}

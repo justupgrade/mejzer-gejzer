@@ -11,11 +11,12 @@
 	$row =  intval($data[2]);
 	$type = intval($_POST['type']);
 	
-	if($col !== 0 && $col !== $map->getLastCol() && $row !== 0 && $col !== $map->getLastRow()){
+	if($col !== 0 && $col !== $map->getLastCol() && $row !== 0 && $row !== $map->getLastRow()){
 		$map->update($col,$row,$type);
-		echo "updated";
+		$_SESSION['map'] = $map;
+		echo "updated col: $col, row: $row";
 		die();
 	}
 	
-	echo "not updated";
+	echo "not updated col: $col, row: $row";
 ?>

@@ -22,8 +22,8 @@ function Weapon(options) {
 		return {
 			"type": this.type,
 			"name": this.name,
-			"damage": this.damage,
-		}
+			"damage": this.damage
+		};
 	}
 }
 
@@ -37,8 +37,8 @@ function Armor(options) {
 		return {
 			"type": this.type,
 			"name": this.name,
-			"protection": this.protection,
-		}
+			"protection": this.protection
+		};
 	}
 }
 
@@ -50,8 +50,8 @@ function Book(options) {
 	this.GetDetailsDescriptor = function() {
 		return {
 			"type": this.type,
-			"name": this.name,
-		}
+			"name": this.name
+		};
 	}
 }
 
@@ -64,10 +64,31 @@ function QuestItem(options){
 	this.GetDetailsDescriptor = function() {
 		return {
 			"type": this.type,
-			"name": this.name,
-		}
+			"name": this.name
+		};
 	}
 }
+
+function FoodItem(options){
+	this.wearable = false;
+	this.useable = true;
+	this.hpRestore = options.hp_restore;
+	this.type = "food";
+	this.itemID = options.id;
+	this.name = options.item_name;
+	
+	this.GetDetailsDescriptor = function() {
+		return {
+			"type":this.type,
+			"name":this.name,
+			"hp_restore": this.hpRestore
+		};
+		
+	};
+}
+
+FoodItem.prototype = new Item();
+FoodItem.prototype.constructor = FoodItem;
 
 Weapon.prototype = new Item();
 Weapon.prototype.constructor = Weapon;

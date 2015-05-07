@@ -7,6 +7,8 @@ function ItemFactory() {
 	this.create = function(options){
 		var ParentClass = null;
 		
+		//console.log(options.type);
+		
 		if(options.type === "weapon"){
 			ParentClass = Weapon;
 		} else if(options.type === "armor") {
@@ -15,6 +17,8 @@ function ItemFactory() {
 			ParentClass = Book;
 		} else if(options.type === "quest") {
 			ParentClass = QuestItem;
+		} else if(options.type === "food_item") {
+			ParentClass = FoodItem;
 		}
 		
 		if( ParentClass === null) return null;
