@@ -37,6 +37,7 @@ MovementController.prototype.clickHandler = function(location) {
 	var cords = this.calculateCords(location.X, location.Y);
 	
 	if(cords != null) {
+		if(this.map.TileInFog(cords.X,cords.Y)) return false;
 		
 		//what was clicked? 
 		var tile = this.getTile({"COL":cords.X, "ROW":cords.Y});

@@ -218,6 +218,10 @@ function Map(factory) {
     	return null;
     }
     
+    this.TileInFog = function(col,row){
+    	return this.fog[row][col];
+    }
+    
     this.GetGateByDescriptor = function(data){	
     	for(var gateIDX in this.gates){
     		if(this.gates[gateIDX][data.key] == data.value){
