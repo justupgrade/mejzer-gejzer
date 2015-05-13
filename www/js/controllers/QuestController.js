@@ -11,6 +11,7 @@ QuestController.prototype.load = function() {
 	
 }
 
+//raw data (.json) from map.quests in specified room
 QuestController.prototype.parse = function(data){
 	this.quests = data;
 }
@@ -51,6 +52,38 @@ QuestController.prototype.addQuest = function(player,npcID,questIDX) {
 
 QuestController.prototype.GetRawQuest = function(npcID, questIDX){
 	return this.quests[npcID-1][questIDX];
+}
+
+QuestController.prototype.GetRawQuestById = function(questID) {
+	//quests[npcIDX][questIDX]
+	//loop through quest of every npc:
+	var npc, quest;
+	var npcIDX, questIDX; 
+	for(npcIDX in this.quests){
+		npc = this.quests[npcIDX];
+		for(questIDX in npc){
+			quest = npc[questIDX];
+			if(quest.questID == questID) {
+				return quest;
+			}
+		}
+	}
+	
+	return null;
+}
+
+//parse loaded indexes into array:
+QuestController.prototype.ParseAllCompletedQuests = function(indexes) {
+	var result = [];
+	var factory = new QuestFactory();
+	for(var i in indexes){
+		var rawQuestData = this.GetRawQuestById(indexes[i]);
+		var quest = factory.create(rawQuestData);
+		quest.completed = true;
+		result.push(quest);
+	}
+	
+	return result;
 }
 
 //Get all player quests...

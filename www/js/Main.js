@@ -72,6 +72,9 @@ function Main() {
         	
         	npcController.load(map.rawQuestData); //quests for loaded map
         	npcController.SetUpPlayer(map.GetPlayer());
+        	//load quests
+        	var completedQ = npcController.questController.ParseAllCompletedQuests(gameLoader.GetQuestsCompleted());
+        	map.GetPlayer().LoadCompletedQuests(completedQ);
         	
         	inventoryController.SetPlayer(map.GetPlayer());
         	inventoryController.LoadItems(gameLoader.GetItems());
@@ -107,8 +110,6 @@ function Main() {
     		movementController.SetMap(map);
     		
     		map.RemoveFogAroundPlayer();
-    		
-    		console.log(map.items, inventoryController.items);
     		
     		self.Draw();
     		console.log('id:' + self.systemController.current.id);
@@ -186,8 +187,14 @@ function Main() {
     	var stats = player.SerializeStats();
     	var items = player.inventory.SerializeInventory();
     	var itemMemory = player.inventory.SerializeMemory();
+    	var questsCompleted = player.SerializeQuestsCompleted();
     	
-    	var data = {"stats":stats, "memory":itemMemory, "items":items};
+    	var data = {
+    		"stats":stats, 
+    		"memory":itemMemory, 
+    		"items":items,
+    		"quests_completed":questsCompleted
+    	};
     	
     	var formdata = new FormData();
     	formdata.append('data', JSON.stringify(data));

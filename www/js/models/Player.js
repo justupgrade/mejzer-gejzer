@@ -213,6 +213,19 @@ function Player() {
     	return stats;
     }
     
+    this.SerializeQuestsCompleted = function() {
+    	var qCompleted = [];
+    	for(var idx in this.questsCompleted){
+    		var quest = this.questsCompleted[idx];
+    		qCompleted.push(quest.GetID());
+    	}
+    	return qCompleted;
+    }
+    
+    this.LoadCompletedQuests = function(data){
+    	this.questsCompleted = data;
+    }
+    
     this.LoadStats = function(stats){
     	if(!stats) return;
     	this.gold = stats.gold;

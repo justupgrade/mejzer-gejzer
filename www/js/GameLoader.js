@@ -7,6 +7,7 @@ function GameLoader() {
 	this.playerData = null;
 	this.itemMemory = null;
 	this.items = null;
+	this.questsCompleted = null;
 }
 
 GameLoader.prototype.LoadPlayer = function() {
@@ -27,8 +28,13 @@ GameLoader.prototype.onPlayerDataLoaded = function(e) {
 		e.target.self.playerData = response['stats'];
 		e.target.self.itemMemory = response['memory'];
 		e.target.self.items = response['items'];
+		e.target.self.questsCompleted = response['quests_completed'];
 	}
 	e.target.self.playerDataLoaded = true;
+}
+
+GameLoader.prototype.GetQuestsCompleted = function() {
+	return this.questsCompleted;
 }
 
 GameLoader.prototype.GetPlayerStats = function() {
