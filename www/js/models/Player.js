@@ -222,7 +222,22 @@ function Player() {
     	return qCompleted;
     }
     
+    this.SerializeQuestsActive = function() {
+    	var qActive = [];
+    	for(var idx in this.quests){
+    		var quest = this.quests[idx];
+    		qActive.push(quest.GetID());
+    	}
+    	return qActive;
+    }
+    
+    this.LoadActiveQuests = function(data){
+    	if(!data) return;
+    	this.quests = data;
+    }
+    
     this.LoadCompletedQuests = function(data){
+    	if(!data) return;
     	this.questsCompleted = data;
     }
     

@@ -74,7 +74,9 @@ function Main() {
         	npcController.SetUpPlayer(map.GetPlayer());
         	//load quests
         	var completedQ = npcController.questController.ParseAllCompletedQuests(gameLoader.GetQuestsCompleted());
+        	var activeQ = npcController.questController.ParseAllActiveQuests(gameLoader.GetQuestsActive());
         	map.GetPlayer().LoadCompletedQuests(completedQ);
+        	map.GetPlayer().LoadActiveQuests(activeQ);
         	
         	inventoryController.SetPlayer(map.GetPlayer());
         	inventoryController.LoadItems(gameLoader.GetItems());
@@ -184,16 +186,13 @@ function Main() {
     
     this.saveGame = function() {
     	var player = map.GetPlayer();
-    	var stats = player.SerializeStats();
-    	var items = player.inventory.SerializeInventory();
-    	var itemMemory = player.inventory.SerializeMemory();
-    	var questsCompleted = player.SerializeQuestsCompleted();
     	
     	var data = {
-    		"stats":stats, 
-    		"memory":itemMemory, 
-    		"items":items,
-    		"quests_completed":questsCompleted
+    		"stats": player.SerializeStats(), 
+    		"memory": player.inventory.SerializeMemory(), 
+    		"items": player.inventory.SerializeInventory(),
+    		"quests_completed": player.SerializeQuestsCompleted(),
+    		"quests_active": player.SerializeQuestsActive()
     	};
     	
     	var formdata = new FormData();

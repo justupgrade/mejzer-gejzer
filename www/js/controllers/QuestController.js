@@ -86,6 +86,17 @@ QuestController.prototype.ParseAllCompletedQuests = function(indexes) {
 	return result;
 }
 
+QuestController.prototype.ParseAllActiveQuests = function(indexes){
+	var result = [];
+	var factory = new QuestFactory();
+	for(var i in indexes){
+		var quest = factory.create(this.GetRawQuestById(indexes[i]));
+		result.push(quest);
+	}
+	
+	return result;
+}
+
 //Get all player quests...
 QuestController.prototype.GetAllQuests = function() {
 	var idx;
