@@ -77,6 +77,7 @@ function Main() {
         	var activeQ = npcController.questController.ParseAllActiveQuests(gameLoader.GetQuestsActive());
         	map.GetPlayer().LoadCompletedQuests(completedQ);
         	map.GetPlayer().LoadActiveQuests(activeQ);
+        	map.GetPlayer().LoadKillHistory(gameLoader.GetKillHistory());
         	
         	inventoryController.SetPlayer(map.GetPlayer());
         	inventoryController.LoadItems(gameLoader.GetItems());
@@ -192,7 +193,8 @@ function Main() {
     		"memory": player.inventory.SerializeMemory(), 
     		"items": player.inventory.SerializeInventory(),
     		"quests_completed": player.SerializeQuestsCompleted(),
-    		"quests_active": player.SerializeQuestsActive()
+    		"quests_active": player.SerializeQuestsActive(),
+    		"kill_history": player.SerializeKillHistory()
     	};
     	
     	var formdata = new FormData();

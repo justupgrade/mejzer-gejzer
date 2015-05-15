@@ -231,6 +231,15 @@ function Player() {
     	return qActive;
     }
     
+    this.SerializeKillHistory = function() {
+    	return this.killHistory;
+    }
+    
+    this.LoadKillHistory = function(data){
+    	if(!data) return;
+    	this.killHistory = data;
+    }
+    
     this.LoadActiveQuests = function(data){
     	if(!data) return;
     	this.quests = data;

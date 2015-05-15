@@ -31,8 +31,13 @@ GameLoader.prototype.onPlayerDataLoaded = function(e) {
 		e.target.self.items = response['items'];
 		e.target.self.questsCompleted = response['quests_completed'];
 		e.target.self.questsActive = response['quests_active'];
+		e.target.self.killHistory = response['kill_history'];
 	}
 	e.target.self.playerDataLoaded = true;
+}
+
+GameLoader.prototype.GetKillHistory = function(){
+	return this.killHistory;
 }
 
 GameLoader.prototype.GetQuestsActive = function() {
